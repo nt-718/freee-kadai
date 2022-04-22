@@ -1,0 +1,56 @@
+freee課題 メモ
+
+4/17
+To-do
+1.アプリの構成を考える
+
+Review
+1.アプリの構成
+出勤時：名前を入力してボタンをクリック(その時刻と名前を記録しておく)
+⇒メッセージを表示　例．今日も一日頑張ろう！
+退勤時：ボタンを入力
+⇒メッセージと労働時間を表示　例．一日お疲れさまでした！(8時間)
+※記録しておいた時間から労働時間を計算
+
+〇使用する言語(候補)
+・Python⇒Python自体はデータ分析で使ったことがあるが、アプリ開発の経験は無し
+・React⇒環境構築がほとんど出来ている(ただしJavaScriptの知識は少ない)
+・Flutter⇒別pcに環境は出来ているが、pcの不具合が心配
+・HTML/CSS/Javascript⇒アプリというよりページになりそう(？)
+・Ruby⇒以前Railsの環境構築に失敗している＋PCのストレージが厳しい
+
+メモ
+・mac bookとsurface laptopを使っているが、macの方はPCの不具合が心配
+・surfaceの方はストレージが少なくRubyやFlutterの環境構築ができなかった
+⇒PythonかReactを使って打刻アプリを作りたい
+
+
+4/18,19
+To-do
+1.React tutorial
+
+Review
+1.Reactの勉強を始めたが、tutorial通りにコードを書いてもVSCodeの波線がなかなか解消されなかった。
+　freeCodeCamp.orgのYoutube動画(https://youtu.be/bMknfKXIFA8?list=LL)が比較的新しくエラーも出なかったが、tutorialを終えるのに時間がかかりすぎるため、非現実的。
+⇒JavaScriptの知識も浅いため、Reactでのアプリ開発はあきらめようと思う。
+・pythonのフレームワーク決め
+⇒Flaskは小規模開発に向いており、諸学者にもとっつきやすいという利点があるため、これを使ってアプリを作ることにした。
+
+4/20,21
+To-do
+1.flask tutorial
+2.内容のアップデート
+
+Review
+1.FlaskのDocumentと次のYoutube動画でFlaskについて勉強した。
+(https://youtu.be/VtJ-fGm4gNg?list=LL)
+(https://youtu.be/EQIAzH0HvzQ?list=LL)
+(https://youtu.be/Qr4QMBUPxWo?list=LL)※一部
+
+2.
+
+4/22
+To-do
+1.実際に開発スタート
+
+Review

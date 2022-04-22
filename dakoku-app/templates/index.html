@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+
+<h1>おはようございます。</h1>
+
+<h2>{{ day }}</h2>
+
+<p>名前を入力して出勤ボタンを押してください</p>
+
+<form action="/home" method="POST">
+  <label for="name">名前：</label>
+  <input type="text" name="username" />
+  <input type="submit" value="出勤" class="btn" />
+</form>
+
+{% endblock %}

@@ -3,6 +3,7 @@ freee課題 メモ
 4/17
 To-do
 1.アプリの構成を考える
+2.Gitの勉強
 
 Review
 1.アプリの構成
@@ -28,6 +29,7 @@ Review
 4/18,19
 To-do
 1.React tutorial
+2.Gitの勉強
 
 Review
 1.Reactの勉強を始めたが、tutorial通りにコードを書いてもVSCodeの波線がなかなか解消されなかった。
@@ -39,7 +41,6 @@ Review
 4/20,21
 To-do
 1.flask tutorial
-2.内容のアップデート
 
 Review
 1.FlaskのDocumentと次のYoutube動画でFlaskについて勉強した。
@@ -47,10 +48,17 @@ Review
 (https://youtu.be/EQIAzH0HvzQ?list=LL)
 (https://youtu.be/Qr4QMBUPxWo?list=LL)※一部
 
-2.
 
 4/22
 To-do
 1.実際に開発スタート
+2.Githubのrepositoryを作る
 
 Review
+1.データベース以外は一応形になった。
+⇒flask_sqlalchemyで、データを取り出すと[<User1><User2><User3><User4>]のように表示されてしまう。
+　しかし、.dbの中身をcatで見ると保存はされていた
+　この問題が解決したらログイン機能と過去の出勤時間一覧ページを追加したい。
+　今のままではかなり物足りないため入力フォーム上部に時計(HTML&CSS&Javascript)を表示することにした。
+
+2.無事成功！

@@ -1,6 +1,8 @@
-{% extends "base.html" %} {% block content %}
-
+{% extends "base.html" %} {% block content %} {% if st_h <= 11 %}
 <h1>おはようございます。</h1>
+{% else %}
+<h1>こんにちは。</h1>
+{% endif %}
 
 <h2>{{ day }}</h2>
 
@@ -10,6 +12,9 @@
   <label for="name">名前：</label>
   <input type="text" name="username" />
   <input type="submit" value="出勤" class="btn" />
+</form>
+<form action="/message" method="POST">
+  <a href="message" class="kekkinn">欠勤連絡はこちら</a>
 </form>
 
 {% endblock %}

@@ -1,5 +1,19 @@
 {% extends "base.html" %} {% block content %}
 <h1>お疲れさまでした。</h1>
+
+{% if th >= 8 and tm >= 0 %}
+<p>働きすぎですよ～</p>
+{% else %}
+<p>次もこの調子で！</p>
+{% endif %}
+
 <p>労働時間：{{ th }}時間{{ tm }}分</p>
 <p>全てのブラウザを閉じてください。</p>
+
+<form action="/memo" method="POST">
+  <input type="submit" value="メモを追加" class="btn" />
+</form>
+
+<!-- <p>{{ st_h }}:{{ st_m }}</p>
+<p>{{ et_h }}:{{ et_m }}</p> -->
 {% endblock %}

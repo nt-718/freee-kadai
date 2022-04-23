@@ -1,13 +1,19 @@
-{% extends "base.html" %} {% block content %}
-<p>{{ username }}さん、こんにちは！</p>
-<!-- <p>今日のTodoリストです</p>
+{% extends "base.html" %} {% block content %} {% if et_h >= 11 and et_m >= 0 %}
+<p>{{ username }}さん、遅刻ですよ・・・</p>
+{% else %}
+<p>{{ username }}さん、今日も頑張りましょう！</p>
+{% endif %}
+
+<p>今日のTodoリストです</p>
 <ul>
-  <li>freee-kadai with flask</li>
-</ul> -->
+  <!-- <li>{{ memos }}</li> -->
+</ul>
 <p>退勤時には下のボタンを押してください</p>
-<p>{{ user.username }}</p>
 
 <form action="/finish" method="POST">
   <input type="submit" value="退勤" class="btn" />
 </form>
+
+<a href="/history">出勤状況確認</a>
+
 {% endblock %}

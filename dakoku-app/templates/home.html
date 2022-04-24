@@ -3,17 +3,28 @@
 {% else %}
 <p>{{ username }}さん、今日も頑張りましょう！</p>
 {% endif %}
+<a href="/history">出勤状況確認</a>
+{% for user in users %}
+<!-- <p>{{ user.user }}</p>
+<p>{{ user.day }}</p>
+<p>{{ user.starth }}:{{ user.startm }}</p> -->
+
+{% endfor %}
 
 <p>今日のTodoリストです</p>
+{% for task in tasks %}
 <ul>
-  <!-- <li>{{ memos }}</li> -->
+  <li style="color: white">{{ task.memo }}</li>
 </ul>
+{% endfor %}
+
+<form action="/memo" method="POST">
+  <input type="submit" value="Todoの編集" class="btn" />
+</form>
 <p>退勤時には下のボタンを押してください</p>
 
 <form action="/finish" method="POST">
   <input type="submit" value="退勤" class="btn" />
 </form>
-
-<a href="/history">出勤状況確認</a>
 
 {% endblock %}

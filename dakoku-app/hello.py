@@ -6,14 +6,26 @@ from flask_mail import Message
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///memo.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///memo.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
-class Memo(db.Model):
+class Todo(db.Model):
+    __tablename__ = 'todos'
     id = db.Column(db.Integer, primary_key=True)
-    memo = db.Column(db.String(255), nullable=False)
-    due = db.Column(db.DateTime, nullable=False)
+    memo = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+class User(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(20), nullable=False)
+    day = db.Column(db.String(20), nullable=False)
+    starth = db.Column(db.String(20), nullable=False)
+    startm = db.Column(db.String(20), nullable=False)
+    
 
 mail = Mail(app)
 
@@ -37,15 +49,25 @@ def index():
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
+    day=datetime.now().date()
     username = request.form.get('username')
     et=datetime.now()
     et_h=et.hour
     et_m=et.minute
     
-    if request.method == 'POST':    
-        return render_template('home.html', username=username, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)
+    if request.method == 'POST':   
+ 
+        newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+        db.session.add(newinfo)
+        db.session.commit()
+        
+        users = User.query.all()
+        
+        tasks = Todo.query.order_by(Todo.date_created).all()
+        return render_template('home.html', users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)
     else:
-        return render_template('home.html', st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)    
+        tasks = Todo.query.order_by(Todo.date_created).all()
+        return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)    
     
 @app.route('/finish', methods=['GET', 'POST'])
 def finish():
@@ -82,38 +104,78 @@ def message():
         return redirect(url_for('message'))
     return render_template('message.html')
 
-events = [
-    {
-        'title': '欠勤',
-        'date': '2022-04-23'
-    },
-    {
-        'title': '遅刻',
-        'date': '2022-04-10'
-    }
-]   
+infos = User.query.all()
+
+for info in infos:
+    
+    
+    if int(info.starth) >= 11 and int(info.startm) >= 0:
+        
+        events = [
+        {
+            'title': '遅刻',
+            'date': info.day
+        }
+        ]
+    else:
+        events = [
+        {
+            'title': '出勤',
+            'date': info.day
+        }
+    
+        ] 
+
 
 @app.route('/history')
 def calendar():
     return render_template('history.html', events=events)
 
 @app.route('/memo', methods=['GET', 'POST'])
-def create():
-    return render_template('memo.html')
-    
-@app.route('/end', methods=['GET', 'POST'])
-def create2():
+def aaa():
+        tasks = Todo.query.order_by(Todo.date_created).all()
+        return render_template('memo.html', tasks=tasks)
+
+@app.route('/add', methods=['GET', 'POST'])
+def memo():
     if request.method == 'POST':
-        note = request.form.get('note')
-        due = request.form.get('due')
-        due = datetime.strptime(str(due), '%Y-%m-%d')
-        new_memo = Memo(memo=note, due=due)
-        db.session.add(new_memo)
+        task_content = request.form['content']
+        new_task = Todo(memo=task_content)
+
+        try:
+            db.session.add(new_task)
+            db.session.commit()
+            return redirect('/memo')
+        except:
+            return "エラー"
+    else:
+        tasks = Todo.query.order_by(Todo.date_created).all()
+        return render_template('memo.html', tasks=tasks)
+
+@app.route('/delete/<int:id>')
+def delete(id):
+    task_to_delete = Todo.query.get_or_404(id)
+
+    try:
+        db.session.delete(task_to_delete)
         db.session.commit()
-        return render_template('memo.html')
-    else:        
-        memos = Memo.query.all()
-        return render_template('memo.html', memos=memos)
+        return redirect('/memo')
+    except:
+        return 'エラー'
+
+@app.route('/edit/<int:id>', methods=['GET', 'POST'])
+def update(id):
+    task_to_edit = Todo.query.get_or_404(id)
+    if request.method == 'POST':
+        task_to_edit.memo = request.form['content']
+
+        try:
+            db.session.commit()
+            return redirect('/memo')
+        except:
+            return "エラー"
+    else:
+        return render_template('edit.html', task=task_to_edit)
 
 
 if __name__=='__main__':

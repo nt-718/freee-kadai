@@ -9,12 +9,11 @@
 <p>名前を入力して出勤ボタンを押してください</p>
 
 <form action="/home" method="POST">
-  <label for="name">名前：</label>
-  <input type="text" name="username" />
+  <input type="text" name="username" class="form-text" />
   <input type="submit" value="出勤" class="btn" />
 </form>
 <form action="/message" method="POST">
-  <a href="message" class="kekkinn">欠勤連絡はこちら</a>
+  <a href="message" class="link">欠勤連絡はこちら</a>
 </form>
 
 {% endblock %}

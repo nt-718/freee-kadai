@@ -19,12 +19,21 @@
     <!-- <p>メールアドレスを入力してください</p> -->
 
     <form action="/message" method="POST">
-      <label for="name">メールアドレス：</label>
-      <input type="text" name="sender" />
-
-      <label for="name">本文：</label>
-      <input type="text" name="text" />
-      <input type="submit" value="送信" class="btn" />
+      <table class="contact-table">
+        <tr>
+          <th class="contact-item">メールアドレス</th>
+          <td class="contact-body">
+            <input type="email" name="sender" class="form-text" />
+          </td>
+        </tr>
+        <tr>
+          <th class="contact-item">内容</th>
+          <td class="contact-body">
+            <textarea name="text" class="form-textarea"></textarea>
+          </td>
+        </tr>
+      </table>
     </form>
+    <input type="submit" value="送信" class="btn" />
   </body>
 </html>

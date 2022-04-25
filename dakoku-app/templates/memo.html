@@ -6,20 +6,18 @@
   <h2 style="text-align: center">タスクはありません</h2>
   {% else %}
 
-  <table class="table" style="color: white">
+  <table class="table">
     <tr>
-      <th>Task</th>
-      <th>Date</th>
+      <th class="todo-item">タスク</th>
+      <th class="todo-item">登録</th>
+      <th class="todo-item">削除</th>
     </tr>
     {% for task in tasks %}
     <tr>
-      <td>{{ task.memo }}</td>
-      <td>{{ task.date_created.date() }}</td>
-      <td>
-        <a class="btn btn-primary" href="/edit/{{task.id}}">編集</a>
-      </td>
-      <td>
-        <a class="btn btn-danger" href="/delete/{{task.id}}">削除</a>
+      <td class="todo-body">{{ task.memo }}</td>
+      <td class="todo-body">{{ task.date_created.date() }}</td>
+      <td class="todo-body">
+        <a href="/delete/{{task.id}}" class="todo-action">削除</a>
       </td>
     </tr>
     {% endfor %}
@@ -27,8 +25,8 @@
   {% endif %}
 
   <form action="/add" method="post">
-    <input type="text" name="content" />
-    <input type="submit" value="新規追加" />
+    <input type="text" name="content" class="form-text" />
+    <input type="submit" value="新規追加" class="btn" />
   </form>
 </div>
 {% endblock %}

@@ -1,9 +1,12 @@
+from ensurepip import bootstrap
 from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_mail import Message
 from datetime import datetime
+from flask_bootstrap import Bootstrap
+
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///memo.db'
@@ -11,6 +14,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+bootstrap = Bootstrap(app)
 
 class Todo(db.Model):
     __tablename__ = 'todos'
@@ -104,27 +108,31 @@ def message():
         return redirect(url_for('message'))
     return render_template('message.html')
 
+
+
 infos = User.query.all()
+
+events = []
 
 for info in infos:
     
-    
     if int(info.starth) >= 11 and int(info.startm) >= 0:
-        
-        events = [
-        {
-            'title': '遅刻',
-            'date': info.day
-        }
-        ]
-    else:
-        events = [
-        {
-            'title': '出勤',
-            'date': info.day
-        }
     
-        ] 
+        list = {
+                'title': '遅刻',
+                'date': info.day
+            }
+    else:
+        list = {
+                'title': '出勤',
+                'date': info.day
+            }
+    
+        
+    events.append(list)
+    # events = set(events)
+    
+    
 
 
 @app.route('/history')
@@ -163,19 +171,6 @@ def delete(id):
     except:
         return 'エラー'
 
-@app.route('/edit/<int:id>', methods=['GET', 'POST'])
-def update(id):
-    task_to_edit = Todo.query.get_or_404(id)
-    if request.method == 'POST':
-        task_to_edit.memo = request.form['content']
-
-        try:
-            db.session.commit()
-            return redirect('/memo')
-        except:
-            return "エラー"
-    else:
-        return render_template('edit.html', task=task_to_edit)
 
 
 if __name__=='__main__':

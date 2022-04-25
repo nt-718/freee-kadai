@@ -10,6 +10,8 @@
 
 <p><br>アプリの構造<img src="/dakoku-app/static/app-stracture.png" alt="error" /></p>
 
+<p><br>フォルダ<img src="/dakoku-app/static/app-tree.png" alt="error" /></p>
+
 ### 各バージョン
 
 ```

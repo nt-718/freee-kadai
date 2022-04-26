@@ -2,15 +2,15 @@
 
 ## 明治大学 経営学部経営学科 4 年 中川崇大
 
-### <br>アプリのコンセプト
+### <br>アプリ作成のコンセプト
 
-- シンプルな UI
-- データベースを多用
-- 対話的なメッセージ
+- シンプルな UI とダイナミックな時計の動き
+- 意欲的にデータベースを利用
+- メッセージ内容のバリエーションで、少しでも有機的に
 
-<p><br>アプリの構造<img src="/dakoku-app/static/app-stracture.png" alt="error" /></p>
+### <p><br>アプリの構造<img src="/dakoku-app/static/app-stracture.png" alt="error" /></p>
 
-<p><br>フォルダ<img src="/dakoku-app/static/app-tree.png" alt="error" /></p>
+### <p><br>フォルダ<img src="/dakoku-app/static/app-tree.png" alt="error" /></p>
 
 ### 各バージョン
 
@@ -27,6 +27,9 @@ Flask-SQLAlchemy  2.5.1
 ### ノート
 
 - アプリ開発を始めたころから memo.txt で制作過程の記録をとってあります。
-- git のコミットメッセージの書き方を統一し、その日の差分を見やすく調整しています。
+- ~~git のコミットメッセージの書き方を統一し、その日の差分を見やすく調整しています。~~
+  <br>⇒Github ではそもそも必要なかった。
+
 - 背景画像は以下
   https://jp.depositphotos.com/13534536/stock-photo-meeting-room.html
+- コードの非効率な部分はこれから修正していけたらと思っている。

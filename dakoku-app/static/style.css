@@ -83,6 +83,7 @@ form {
   border: 1px solid white;
 }
 
+/* Clock section */
 .clock {
   width: 300px;
   height: 300px;
@@ -186,6 +187,8 @@ form {
   background-color: black;
 }
 
+/* text form section */
+
 .table {
   color: white;
 }
@@ -216,6 +219,8 @@ form {
   padding: 10px;
   border: 1px solid black;
 }
+
+/* contact section */
 
 .contact-table {
   width: 100%;

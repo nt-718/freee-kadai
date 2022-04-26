@@ -1,4 +1,7 @@
-{% extends "base.html" %} {% block content %} {% if st_h <= 11 %}
+{% extends "base.html" %} {% block content %}
+<!-- Message section start -->
+
+{% if st_h <= 11 %}
 <h1>おはようございます。</h1>
 {% else %}
 <h1>こんにちは。</h1>
@@ -6,14 +9,24 @@
 
 <h2>{{ day }}</h2>
 
+<!-- Message section end -->
+
+<!-- Syukkinn section start -->
+
 <p>名前を入力して出勤ボタンを押してください</p>
 
 <form action="/home" method="POST">
   <input type="text" name="username" class="form-text" />
   <input type="submit" value="出勤" class="btn" />
 </form>
+
+<!-- Syukkinn section end -->
+
+<!-- Kekkinn section start -->
+
 <form action="/message" method="POST">
   <a href="message" class="link">欠勤連絡はこちら</a>
 </form>
+<!-- Kekkinn section end -->
 
 {% endblock %}

@@ -7,21 +7,21 @@ from flask_mail import Message
 from datetime import datetime
 from flask_bootstrap import Bootstrap
 
-
+# database 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///memo.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
-bootstrap = Bootstrap(app)
 
+# todo list
 class Todo(db.Model):
     __tablename__ = 'todos'
     id = db.Column(db.Integer, primary_key=True)
     memo = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
+# user syukkinn
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -30,13 +30,16 @@ class User(db.Model):
     starth = db.Column(db.String(20), nullable=False)
     startm = db.Column(db.String(20), nullable=False)
     
-
+# kekkinn message
 mail = Mail(app)
 
+
+# start time
 st=datetime.now()
 st_h=st.hour
 st_m=st.minute
 
+# syukkinn
 @app.route("/", methods=['GET', 'POST'])
 def index():
 
@@ -51,6 +54,7 @@ def index():
     else:
         return render_template('index.html', day=day, st_h=st_h, st_m=st_m)
 
+# home
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     day=datetime.now().date()
@@ -72,7 +76,40 @@ def home():
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)    
+
+# home2
+# @app.route('/home', methods=['GET', 'POST'])
+# def home():
     
+#     if request.method == 'POST':   
+#         day=datetime.now().date()
+#         username = request.form.get('username')
+#         et=datetime.now()
+#         et_h=et.hour
+#         et_m=et.minute
+#         infos = User.query.all()
+        
+#         if username == infos.user and day == infos.day:
+            
+#             newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+            
+#             db.session.add(newinfo)
+#             db.session.commit()
+            
+#             users = User.query.all()
+            
+#             tasks = Todo.query.order_by(Todo.date_created).all()
+#             return render_template('home.html', users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)
+#     else:
+#         tasks = Todo.query.order_by(Todo.date_created).all()
+#         return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)      
+    
+    
+# users = session.query(User).filter(User.name == "sample-name").all()
+# for user in users:
+
+
+# taikinn
 @app.route('/finish', methods=['GET', 'POST'])
 def finish():
     if request.method == 'POST':
@@ -92,6 +129,8 @@ def finish():
     else:
         return render_template('finish.html', st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m, th=th, tm=tm)
 
+
+# kekkinn message
 @app.route("/message", methods=['GET', 'POST'])
 def message():
     if request.method == 'POST':
@@ -109,7 +148,7 @@ def message():
     return render_template('message.html')
 
 
-
+# calendar
 infos = User.query.all()
 
 events = []
@@ -127,23 +166,22 @@ for info in infos:
                 'title': '出勤',
                 'date': info.day
             }
-    
-        
-    events.append(list)
-    # events = set(events)
-    
-    
-
+            
+    events.append(list)    
 
 @app.route('/history')
 def calendar():
     return render_template('history.html', events=events)
 
+
+# todo 
 @app.route('/memo', methods=['GET', 'POST'])
 def aaa():
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template('memo.html', tasks=tasks)
 
+
+# add todo tasks
 @app.route('/add', methods=['GET', 'POST'])
 def memo():
     if request.method == 'POST':
@@ -160,6 +198,8 @@ def memo():
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template('memo.html', tasks=tasks)
 
+
+# remove todo tasks
 @app.route('/delete/<int:id>')
 def delete(id):
     task_to_delete = Todo.query.get_or_404(id)
@@ -172,6 +212,6 @@ def delete(id):
         return 'エラー'
 
 
-
+# debug
 if __name__=='__main__':
     app.run(debug=True)

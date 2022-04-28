@@ -1,17 +1,14 @@
-from ensurepip import bootstrap
 from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_mail import Message
 from datetime import datetime
-from flask_bootstrap import Bootstrap
 
 # database 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 db = SQLAlchemy(app)
 
 # todo list
@@ -21,7 +18,7 @@ class Todo(db.Model):
     memo = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
-# user syukkinn
+# user attendance
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -30,90 +27,70 @@ class User(db.Model):
     starth = db.Column(db.String(20), nullable=False)
     startm = db.Column(db.String(20), nullable=False)
     
-# kekkinn message
+# Absence message
 mail = Mail(app)
 
 
-# start time
 st=datetime.now()
 st_h=st.hour
 st_m=st.minute
 
-# syukkinn
+# Attendance
+
 @app.route("/", methods=['GET', 'POST'])
 def index():
-
-    day=datetime.now().date()
-
-    if request.method == 'POST':
-        global st, st_h, st_m
-        st=datetime.now()
-        st_h=st.hour
-        st_m=st.minute
-        return render_template('home.html', day=day, st_h=st_h, st_m=st_m)
-    else:
-        return render_template('index.html', day=day, st_h=st_h, st_m=st_m)
+    return render_template('index.html', st_h=st_h, st_m=st_m)
 
 # home
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    day=datetime.now().date()
-    username = request.form.get('username')
-    et=datetime.now()
-    et_h=et.hour
-    et_m=et.minute
-    
+    st=datetime.now()
+    st_h=st.hour
+    st_m=st.minute
     if request.method == 'POST':   
- 
-        newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
-        db.session.add(newinfo)
-        db.session.commit()
+        day=datetime.now().date()
+        username = request.form.get('username')
+
         
-        users = User.query.all()
-        
-        tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('home.html', users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)
+        # データベースの更新
+        infos = User.query.all()
+        for info in infos:
+            
+            if day == info.day: #日付の確認
+                if username == info.name: #名前の確認
+                    #既に登録されている
+                    users = User.query.all()
+                    tasks = Todo.query.order_by(Todo.date_created).all()
+                    
+                else: #まだ登録されていない
+                    newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+                    db.session.add(newinfo)
+                    db.session.commit()
+                    users = User.query.all()
+                    tasks = Todo.query.order_by(Todo.date_created).all()
+            
+            else: #日付が違う⇒まだ登録されていない
+
+                users = User.query.all()
+                tasks = Todo.query.order_by(Todo.date_created).all()
+                
+            
+        return render_template('home.html',users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
-        return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)    
-
-# home2
-# @app.route('/home', methods=['GET', 'POST'])
-# def home():
-    
-#     if request.method == 'POST':   
-#         day=datetime.now().date()
-#         username = request.form.get('username')
-#         et=datetime.now()
-#         et_h=et.hour
-#         et_m=et.minute
-#         infos = User.query.all()
-        
-#         if username == infos.user and day == infos.day:
-            
-#             newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
-            
-#             db.session.add(newinfo)
-#             db.session.commit()
-            
-#             users = User.query.all()
-            
-#             tasks = Todo.query.order_by(Todo.date_created).all()
-#             return render_template('home.html', users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)
-#     else:
-#         tasks = Todo.query.order_by(Todo.date_created).all()
-#         return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m)      
-    
-    
-# users = session.query(User).filter(User.name == "sample-name").all()
-# for user in users:
+        return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m)      
 
 
-# taikinn
+# Leaving
 @app.route('/finish', methods=['GET', 'POST'])
 def finish():
     if request.method == 'POST':
         
+        username = request.form.get('username')
+        day=datetime.now().date()
+        
+        # times = User.query
+        time = User.query.filter_by(day=day).all()
         et=datetime.now()
         et_h=et.hour
         et_m=et.minute
@@ -125,12 +102,12 @@ def finish():
             th=et_h-st_h
             tm=et_m-st_m
             
-        return render_template('finish.html', st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m, th=th, tm=tm)
+        return render_template('finish.html',time=time, et_h=et_h, et_m=et_m, th=th, tm=tm)
     else:
-        return render_template('finish.html', st_h=st_h, st_m=st_m, et_h=et_h, et_m=et_m, th=th, tm=tm)
+        return render_template('finish.html')
 
 
-# kekkinn message
+# Absence message
 @app.route("/message", methods=['GET', 'POST'])
 def message():
     if request.method == 'POST':
@@ -147,31 +124,26 @@ def message():
         return redirect(url_for('message'))
     return render_template('message.html')
 
-
 # calendar
-infos = User.query.all()
-
-events = []
-
-for info in infos:
-    
-    if int(info.starth) >= 11 and int(info.startm) >= 0:
-    
-        list = {
-                'title': '遅刻',
-                'date': info.day
-            }
-    else:
-        list = {
-                'title': '出勤',
-                'date': info.day
-            }
-            
-    events.append(list)    
-
-@app.route('/history')
+@app.route('/history', methods=['GET', 'POST'])
 def calendar():
-    return render_template('history.html', events=events)
+    if request.method == 'POST':
+        
+        infos = User.query.all()
+        events = []
+        for info in infos:
+            if int(info.starth) >= 11 and int(info.startm) >= 0:
+                list = {
+                        'title': '遅刻',
+                        'date': info.day
+                    }
+            else:
+                list = {
+                        'title': '出勤',
+                        'date': info.day
+                    }
+            events.append(list)    
+            return render_template('history.html', events=events)
 
 
 # todo 

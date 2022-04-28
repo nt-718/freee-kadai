@@ -2,16 +2,11 @@
 
 <!-- Message section start -->
 
-{% if et_h >= 11 and et_m >= 0 %}
+{% if st_h >= 11 and st_m >= 0 %}
 <p>{{ username }}さん、遅刻ですよ・・・</p>
 {% else %}
 <p>{{ username }}さん、今日も頑張りましょう！</p>
-{% endif %} {% for user in users %}
-<!-- <p>{{ user.user }}</p>
-<p>{{ user.day }}</p>
-<p>{{ user.starth }}:{{ user.startm }}</p> -->
-
-{% endfor %}
+{% endif %} {% for user in users %} {% endfor %}
 <!-- Message section end -->
 
 <!-- Note section start -->

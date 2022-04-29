@@ -4,10 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_mail import Message
 from datetime import datetime
+from sqlalchemy import distinct
 
 # database 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -42,40 +45,96 @@ def index():
     return render_template('index.html', st_h=st_h, st_m=st_m)
 
 # home
+# @app.route('/home', methods=['GET', 'POST'])
+# def home():
+#     st=datetime.now()
+#     st_h=st.hour
+#     st_m=st.minute
+    
+#     if request.method == 'POST':   
+#         day=datetime.now().date()
+#         username = request.form.get('username')
+        
+#         newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+#         db.session.add(newinfo)
+#         db.session.commit()
+#         users = User.query.all()
+#         tasks = Todo.query.order_by(Todo.date_created).all()
+#         # namedate = User.query(User.starth, User.startm).all()
+ 
+#         return render_template('home.html', users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
+#     else:
+#         tasks = Todo.query.order_by(Todo.date_created).all()
+#         return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m)      
+
+# home
+# @app.route('/home', methods=['GET', 'POST'])
+# def home():
+#     st=datetime.now()
+#     st_h=st.hour
+#     st_m=st.minute
+    
+#     if request.method == 'POST':   
+#         day=datetime.now().date()
+#         username = request.form.get('username')
+        
+#         newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+#         db.session.add(newinfo)
+#         db.session.commit()
+#         users = User.query.all()
+#         tasks = Todo.query.order_by(Todo.date_created).all()
+        
+#         new = User.query.filter_by(user="中川崇大", day='2022-04-29')
+        # for neo in new:
+        #     if neo.starth == '19':
+        #         aaa = neo.id
+        #         ccc = User.query.get(aaa)
+        #         db.session.delete(ccc)
+        #         db.session.commit()
+                
+
+ 
+    #     return render_template('home.html', bbb=new, users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
+    # else:
+    #     tasks = Todo.query.order_by(Todo.date_created).all()
+    #     return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m)      
+
+# home test
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     st=datetime.now()
     st_h=st.hour
     st_m=st.minute
-    if request.method == 'POST':   
+    
+    if request.method == 'POST':
+        
         day=datetime.now().date()
         username = request.form.get('username')
-
+    
+        check = User.query.filter_by(user=username, day=day)
         
-        # データベースの更新
-        infos = User.query.all()
-        for info in infos:
-            
-            if day == info.day: #日付の確認
-                if username == info.name: #名前の確認
-                    #既に登録されている
-                    users = User.query.all()
-                    tasks = Todo.query.order_by(Todo.date_created).all()
-                    
-                else: #まだ登録されていない
-                    newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
-                    db.session.add(newinfo)
-                    db.session.commit()
-                    users = User.query.all()
-                    tasks = Todo.query.order_by(Todo.date_created).all()
-            
-            else: #日付が違う⇒まだ登録されていない
+        if check is None:
+            newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+            db.session.add(newinfo)
+            db.session.commit()        
+        
+        else:
+            pass
 
-                users = User.query.all()
-                tasks = Todo.query.order_by(Todo.date_created).all()
-                
             
-        return render_template('home.html',users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
+        new = User.query.filter_by(user="tkhr", day='2022-04-29')
+        for neo in new:
+            if neo.starth == '20':
+                aaa = neo.id
+                # ccc = User.query.get(aaa)
+                # db.session.delete(ccc)
+                # db.session.commit()
+                
+        users = User.query.all()
+        tasks = Todo.query.order_by(Todo.date_created).all()
+            
+ 
+        return render_template('home.html', bbb=new, check=check, users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m)      
@@ -127,23 +186,23 @@ def message():
 # calendar
 @app.route('/history', methods=['GET', 'POST'])
 def calendar():
-    if request.method == 'POST':
-        
-        infos = User.query.all()
-        events = []
-        for info in infos:
-            if int(info.starth) >= 11 and int(info.startm) >= 0:
-                list = {
-                        'title': '遅刻',
-                        'date': info.day
-                    }
-            else:
-                list = {
-                        'title': '出勤',
-                        'date': info.day
-                    }
-            events.append(list)    
-            return render_template('history.html', events=events)
+    
+    infos = User.query.all()
+    # infos = session.query(distinct(User.day)).all()
+    events = []
+    for info in infos:
+        if int(info.starth) >= 11 and int(info.startm) >= 0:
+            list = {
+                    'title': '遅刻',
+                    'date': info.day
+                }
+        else:
+            list = {
+                    'title': '出勤',
+                    'date': info.day
+                }
+        events.append(list)    
+    return render_template('history.html', events=events)
 
 
 # todo 

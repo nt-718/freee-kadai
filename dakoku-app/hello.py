@@ -8,8 +8,8 @@ from sqlalchemy import distinct
 
 # database 
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -111,17 +111,16 @@ def home():
         day=datetime.now().date()
         username = request.form.get('username')
     
-        check = User.query.filter_by(user=username, day=day)
-        
+        check = User.query.filter_by(user=username, day=day).first()
+    
         if check is None:
             newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
             db.session.add(newinfo)
-            db.session.commit()        
-        
+            db.session.commit()
+           
         else:
             pass
-
-            
+ 
         new = User.query.filter_by(user="tkhr", day='2022-04-29')
         for neo in new:
             if neo.starth == '20':

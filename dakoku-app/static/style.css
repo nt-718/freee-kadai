@@ -5,7 +5,7 @@
 }
 
 html {
-  display: flex;
+  /* display: flex; */
   color: rgb(255, 255, 255);
   justify-content: center;
   align-items: center;
@@ -30,6 +30,33 @@ html {
 body {
   display: grid;
   justify-items: center;
+}
+
+header {
+  top: 0;
+  left: 0;
+  right: 0;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+  box-shadow: 0 1rem 1rem rgba(0, 0, 0, 0.2);
+}
+header a {
+  display: inline-block;
+  color: white;
+  font-size: 1.2rem;
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+  text-decoration: none;
+}
+
+header a:hover {
+  color: rgba(220, 20, 60, 0.811);
 }
 
 h1 {
@@ -64,6 +91,12 @@ a {
   font-size: 1rem;
 }
 
+.todolist {
+  margin-top: 2rem;
+  padding: 2rem 5rem 2rem 5rem;
+  border: 1px solid white;
+}
+
 form {
   color: white;
   display: flex;
@@ -81,6 +114,13 @@ form {
   font-size: 16px;
   border-radius: 0%;
   border: 1px solid white;
+}
+
+.btn:hover {
+  transform: scale(1.03);
+  background-color: rgba(155, 155, 155, 0.1);
+  color: #ffffff;
+  border: 1px solid rgb(255, 255, 255);
 }
 
 /* Clock section */
@@ -214,6 +254,10 @@ form {
   border: none;
 }
 
+.form-content {
+  margin: 2rem 0 5rem 0;
+}
+
 .form-text {
   width: 100%;
   padding: 10px;
@@ -252,4 +296,5 @@ form {
   border: 1px solid #ffffff;
   color: #ffffff;
   padding: 5px;
+  margin: 3rem 0 3rem 0;
 }

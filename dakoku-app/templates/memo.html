@@ -1,3 +1,15 @@
+<header>
+  <a href="/home">ホーム</a>
+  <a href="">息抜き</a>
+  <a href="/memo">Todo管理</a>
+  <a href="/history">カレンダー</a>
+  <a href=""
+    ><form action="/finish/{{ username }}" method="POST">
+      <input type="submit" value="退勤" class="btn" />
+    </form>
+  </a>
+</header>
+
 {% extends 'base.html' %} {% block content %}
 
 <!-- Todo section start -->
@@ -27,7 +39,7 @@
   </table>
   {% endif %}
 
-  <form action="/add" method="post">
+  <form action="/add" method="post" class="form-content">
     <input type="text" name="content" class="form-text" />
     <input type="submit" value="新規追加" class="btn" />
   </form>

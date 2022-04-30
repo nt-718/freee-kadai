@@ -9,29 +9,41 @@
       href="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.5.0/main.min.js"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='history.css') }}"
+    />
   </head>
   <body>
+    <header>
+      <a href="/home">ホーム</a>
+      <a href="">息抜き</a>
+      <a href="/memo">Todo管理</a>
+      <a href="/history">カレンダー</a>
+    </header>
     <!-- Calendar section start -->
 
-    <div id="calendar"></div>
-    <script>
-            let calendarEl = document.getElementById('calendar');
-      // 下のエラーは無視しても機能したため、そのままにしてあります。
-            let calendar = new FullCalendar.Calendar(calendarEl, {
-                events:
-                [
-                  {% for event in events %}
+    <div id="calendar" class="calendar">
+      <script>
+              let calendarEl = document.getElementById('calendar');
+        // 下のエラーは無視しても機能したため、そのままにしてあります。
+              let calendar = new FullCalendar.Calendar(calendarEl, {
+                  events:
+                  [
+                    {% for event in events %}
 
-                  {
-                    title: '{{ event.title }}',
-                    start: '{{ event.date }}',
-                  },
-                  {% endfor %}
-                ]
-            });
+                    {
+                      title: '{{ event.title }}',
+                      start: '{{ event.date }}',
+                    },
+                    {% endfor %}
+                  ]
+              });
 
-            calendar.render();
-    </script>
+              calendar.render();
+      </script>
+    </div>
     <!-- Calendar section end -->
   </body>
 </html>

@@ -1,3 +1,15 @@
+<header>
+  <a href="/home">ホーム</a>
+  <a href="">息抜き</a>
+  <a href="/memo">Todo管理</a>
+  <a href="/history/{{ username }}">カレンダー</a>
+  <a href=""
+    ><form action="/finish/{{ username }}" method="POST">
+      <input type="submit" value="退勤" class="btn" />
+    </form>
+  </a>
+</header>
+
 {% extends "base.html" %} {% block content %}
 
 <!-- Message section start -->
@@ -8,23 +20,16 @@
 <p>{{ username }}さん、今日も頑張りましょう！</p>
 {% endif %} {% for user in users %} {% endfor %}
 <!-- Message section end -->
+
 <!-- Note section start -->
-<!-- <p>{{ aaa }}</p> -->
-
-{% for b1 in bbb %}
-<!-- <p>{{ b1.starth }}:{{ b1.startm }}</p> -->
-{% endfor %}
-<!--  -->
-{% for b2 in check %}
-<p>{{ b2.starth }}:{{ b2.startm }}</p>
-{% endfor %}
-
-<p>今日のTodoリストです</p>
-{% for task in tasks %}
-<ul>
-  <li>{{ task.memo }}</li>
-</ul>
-{% endfor %}
+<div class="todolist">
+  <p>今日のTodoリストです</p>
+  {% for task in tasks %}
+  <ul>
+    <li>{{ task.memo }}</li>
+  </ul>
+  {% endfor %}
+</div>
 
 <form action="/memo" method="POST">
   <input type="submit" value="管理" class="btn" />
@@ -34,18 +39,8 @@
 
 <!-- Taikinn section start -->
 
-<p>退勤時には下のボタンを押してください</p>
-
-<form action="/finish" method="POST">
-  <input type="submit" value="退勤" class="btn" />
-</form>
+<p>※退勤時には画面上部のボタンを押してください</p>
 
 <!-- Taikinn section end -->
-
-<!-- Calendar section start -->
-
-<a href="/history" class="link">カレンダー</a>
-
-<!-- Calendar section end -->
 
 {% endblock %}

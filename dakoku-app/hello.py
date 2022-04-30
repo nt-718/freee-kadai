@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_mail import Message
 from datetime import datetime
-from sqlalchemy import distinct
+import random
 
 # database 
 app = Flask(__name__)
@@ -33,73 +33,19 @@ class User(db.Model):
 # Absence message
 mail = Mail(app)
 
-
-st=datetime.now()
-st_h=st.hour
-st_m=st.minute
+# random variable
+rand = random.random()
 
 # Attendance
-
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', st_h=st_h, st_m=st_m)
+
+    st=datetime.now()
+    st_h=st.hour
+    st_m=st.minute
+    return render_template('index.html',rand=rand, st_h=st_h, st_m=st_m)
 
 # home
-# @app.route('/home', methods=['GET', 'POST'])
-# def home():
-#     st=datetime.now()
-#     st_h=st.hour
-#     st_m=st.minute
-    
-#     if request.method == 'POST':   
-#         day=datetime.now().date()
-#         username = request.form.get('username')
-        
-#         newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
-#         db.session.add(newinfo)
-#         db.session.commit()
-#         users = User.query.all()
-#         tasks = Todo.query.order_by(Todo.date_created).all()
-#         # namedate = User.query(User.starth, User.startm).all()
- 
-#         return render_template('home.html', users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
-#     else:
-#         tasks = Todo.query.order_by(Todo.date_created).all()
-#         return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m)      
-
-# home
-# @app.route('/home', methods=['GET', 'POST'])
-# def home():
-#     st=datetime.now()
-#     st_h=st.hour
-#     st_m=st.minute
-    
-#     if request.method == 'POST':   
-#         day=datetime.now().date()
-#         username = request.form.get('username')
-        
-#         newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
-#         db.session.add(newinfo)
-#         db.session.commit()
-#         users = User.query.all()
-#         tasks = Todo.query.order_by(Todo.date_created).all()
-        
-#         new = User.query.filter_by(user="中川崇大", day='2022-04-29')
-        # for neo in new:
-        #     if neo.starth == '19':
-        #         aaa = neo.id
-        #         ccc = User.query.get(aaa)
-        #         db.session.delete(ccc)
-        #         db.session.commit()
-                
-
- 
-    #     return render_template('home.html', bbb=new, users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
-    # else:
-    #     tasks = Todo.query.order_by(Todo.date_created).all()
-    #     return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m)      
-
-# home test
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     st=datetime.now()
@@ -114,51 +60,45 @@ def home():
         check = User.query.filter_by(user=username, day=day).first()
     
         if check is None:
-            newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+            newinfo = User(user=username, rand=rand, day=day, starth=st_h, startm=st_m)
             db.session.add(newinfo)
             db.session.commit()
            
         else:
             pass
- 
-        new = User.query.filter_by(user="tkhr", day='2022-04-29')
-        for neo in new:
-            if neo.starth == '20':
-                aaa = neo.id
-                # ccc = User.query.get(aaa)
-                # db.session.delete(ccc)
-                # db.session.commit()
+
                 
         users = User.query.all()
         tasks = Todo.query.order_by(Todo.date_created).all()
             
  
-        return render_template('home.html', bbb=new, check=check, users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
+        return render_template('home.html', users=users, tasks=tasks, username=username, st_h=st_h, st_m=st_m)
     else:
         tasks = Todo.query.order_by(Todo.date_created).all()
         return render_template('home.html', tasks=tasks, st_h=st_h, st_m=st_m)      
 
 
 # Leaving
-@app.route('/finish', methods=['GET', 'POST'])
-def finish():
+@app.route('/finish/<user>', methods=['GET', 'POST'])
+def finish(user):
     if request.method == 'POST':
         
-        username = request.form.get('username')
         day=datetime.now().date()
         
         # times = User.query
-        time = User.query.filter_by(day=day).all()
+        time = User.query.filter_by(user=user, day=day).first()
         et=datetime.now()
         et_h=et.hour
         et_m=et.minute
+        st_h=time.starth
+        st_m=time.startm
 
-        if et_m < st_m:
-            th=et_h-st_h-1
-            tm=et_m-st_m+60
+        if et_m < int(st_m):
+            th=et_h-int(st_h)-1
+            tm=et_m-int(st_m)+60
         else:
-            th=et_h-st_h
-            tm=et_m-st_m
+            th=et_h-int(st_h)
+            tm=et_m-int(st_m)
             
         return render_template('finish.html',time=time, et_h=et_h, et_m=et_m, th=th, tm=tm)
     else:
@@ -183,11 +123,11 @@ def message():
     return render_template('message.html')
 
 # calendar
-@app.route('/history', methods=['GET', 'POST'])
-def calendar():
+@app.route('/history/<user>', methods=['GET', 'POST'])
+def calendar(user):
     
-    infos = User.query.all()
-    # infos = session.query(distinct(User.day)).all()
+    infos = User.query.filter_by(user=user)
+
     events = []
     for info in infos:
         if int(info.starth) >= 11 and int(info.startm) >= 0:

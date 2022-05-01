@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='counter.css') }}"
+    />
+  </head>
+  <body>
+      <h1 class="title">素数カウンター</h1>
+
+      <h1 id="counter"></h1>
+      <button onclick="increase()" id="button">+</button>
+      </div>
+    <script>
+        let count = 0;
+        document.getElementById("counter").innerHTML = count;
+        function increase() {
+
+            count = count + 1;
+            document.getElementById("counter").innerHTML = count;
+            numberStyle();
+       }
+
+       function numberStyle(){
+           let counter = document.getElementById("counter")
+           let k
+           for (let i = 2; i < count ; i++){
+               if (count % i == 0){
+                   k = true;
+                   break;
+                }
+                else{
+                    k = false
+                }
+           }
+           
+           if (k == false){
+            counter.classList.add("prime");
+           }
+           else{
+            counter.classList.remove("prime");
+            
+           }
+       }
+    </script>
+  </body>
+</html>

@@ -1,19 +1,18 @@
 {% extends "base.html" %} {% block content %}
 <!-- Message section start -->
 
-<h1>お疲れさまでした。</h1>
+<h1>{{ username }}さん、お疲れさまでした。</h1>
 
 {% if th >= 8 and tm >= 0 %}
-<p>働きすぎですよ～</p>
+<p>働きすぎですよ、</p>
+{% elif th <= 4 %}
+<p>今日は早いですね～</p>
 {% else %}
 <p>次もこの調子で！</p>
 {% endif %}
 
 <p>労働時間：{{ th }}時間{{ tm }}分</p>
 <p>全てのブラウザを閉じてください。</p>
-
-<!-- <p>{{ st_h }}:{{ st_m }}</p>
-<p>{{ et_h }}:{{ et_m }}</p> -->
 
 <!-- Message section end -->
 

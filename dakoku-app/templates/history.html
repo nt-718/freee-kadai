@@ -17,10 +17,16 @@
   </head>
   <body>
     <header>
-      <a href="/home">ホーム</a>
-      <a href="">息抜き</a>
-      <a href="/memo">Todo管理</a>
-      <a href="/history">カレンダー</a>
+      <!-- <a href="/home">ホーム</a> -->
+      <a href="/home/{{ username }}">ホーム</a>
+      <a href="/game/{{ username }}">息抜き</a>
+      <a href="/memo/{{ username }}">Todo管理</a>
+      <a href="/history/{{ username }}">カレンダー</a>
+      <a href=""
+        ><form action="/finish/{{ username }}" method="POST">
+          <input type="submit" value="退勤" class="btn" />
+        </form>
+      </a>
     </header>
     <!-- Calendar section start -->
 

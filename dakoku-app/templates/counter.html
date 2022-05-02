@@ -30,15 +30,23 @@
        function numberStyle(){
            let counter = document.getElementById("counter")
            let k
-           for (let i = 2; i < count ; i++){
-               if (count % i == 0){
-                   k = true;
-                   break;
-                }
-                else{
-                    k = false
-                }
+           if ( count == 2 || count == 3){
+               
+               k = false;
            }
+           else{
+
+               for (let i = 2; i < count/2 ; i++){
+                    if (count % i == 0 ){
+                        k = true;
+                        break;
+                    }
+                    else{
+                        k = false;
+                    }
+                }
+           } 
+               
            
            if (k == false){
             counter.classList.add("prime");

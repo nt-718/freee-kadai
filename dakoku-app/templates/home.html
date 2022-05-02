@@ -32,9 +32,10 @@
   {% endfor %}
 </div>
 
-<form action="/memo" method="POST">
+<form action="/memo/{{ username }}" method="POST">
   <input type="submit" value="管理" class="btn" />
 </form>
+<a href="/" style="color: transparent"> - </a>
 
 <!-- Note section end -->
 

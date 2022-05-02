@@ -193,7 +193,7 @@ def game(user):
 def counter():
     return render_template('counter.html')
 
-@app.route('/sudoku')
+@app.route('/game/sudoku')
 def sudoku():
     return render_template('sudoku.html')
 

@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+}
+main {
+  width: 500px;
+  margin: auto;
+  user-select: none;
+  justify-content: center;
+  display: grid;
+}
+
+h1 {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 2.5rem;
+}
+
+.clickenable {
+  color: #ff0000cc;
+}
+table {
+  border-collapse: collapse;
+}
+.main {
+  overflow: hidden;
+}
+.main tr:hover {
+  background-color: #2b00ff1e;
+}
+.main td {
+  border: 1px solid #17004a;
+  text-align: center;
+  font-size: 30px;
+  width: 45px;
+  height: 45px;
+  position: relative;
+}
+.main td:hover {
+  background-color: #2b00ff1e;
+}
+.main td:hover:after {
+  content: "";
+  background-color: #2b00ff1e;
+  width: 100%;
+  height: 200vh;
+  position: absolute;
+  top: -100vh;
+  left: 0;
+  z-index: -1;
+}
+.select td:hover,
+.box div:hover {
+  background: #2b00ff1e;
+  cursor: pointer;
+}
+.main tr:first-child td {
+  border-top: 4px solid #17004a;
+}
+.main tr:nth-of-type(3n) td {
+  border-bottom: 4px solid #17004a;
+}
+.main td:first-child {
+  border-left: 4px solid #17004a;
+}
+.main td:nth-of-type(3n) {
+  border-right: 4px solid #17004a;
+}
+.box {
+  margin-top: 10px;
+  display: flex;
+}
+.select {
+  margin-top: 20px;
+}
+.select td {
+  border: 2px solid #17004a;
+  text-align: center;
+  font-size: 30px;
+  width: 45px;
+  height: 45px;
+}
+.mainClick {
+  background-color: #2b00ff1e;
+}
+
+.remove {
+  border: 2px solid #17004a;
+  text-align: center;
+  font-size: 30px;
+  width: 100px;
+  height: 45px;
+  margin-left: 38%;
+  margin-top: 1rem;
+}

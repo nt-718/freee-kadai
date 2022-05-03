@@ -10,7 +10,28 @@
   </a>
 </header>
 
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% block content %} {% if username == "Admin" %} {% if
+users|length < 1 %}
+<h2 style="text-align: center">error</h2>
+{% else %}
+
+<table class="table">
+  <tr>
+    <th class="todo-item">名前</th>
+    <th class="todo-item">日付</th>
+    <th class="todo-item">出勤</th>
+    <th class="todo-item">退勤</th>
+  </tr>
+  {% for user in users %}
+  <tr>
+    <td class="todo-body">{{ user.user }}</td>
+    <td class="todo-body">{{ user.day }}</td>
+    <td class="todo-body">{{ user.starth }}:{{ user.startm }}</td>
+    <td class="todo-body">{{ user.endh }}:{{ user.endm }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %} {% else %}
 
 <!-- Message section start -->
 {% if msg != "" %}
@@ -25,11 +46,14 @@
 <!-- Note section start -->
 <div class="todolist">
   <p>今日のTodoリストです</p>
-  {% for task in tasks %}
+
+  {% if tasks|length < 1 %}
+  <h2 style="text-align: center">タスクはありません</h2>
+  {% else %} {% for task in tasks %}
   <ul>
     <li>{{ task.memo }}</li>
   </ul>
-  {% endfor %}
+  {% endfor %} {% endif %}
 </div>
 
 <form action="/memo/{{ username }}" method="POST">
@@ -44,5 +68,7 @@
 <p>※退勤時には画面上部のボタンを押してください</p>
 
 <!-- Taikinn section end -->
+{% endif %}
+<a href="/" style="color: transparent"> - </a>
 
 {% endblock %}

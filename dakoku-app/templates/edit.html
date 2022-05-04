@@ -1,0 +1,73 @@
+<header>
+  <a href="/home/{{ username }}">ホーム</a>
+  <a href="/game/{{ username }}">息抜き</a>
+  <a href="/memo/{{ username }}">Todo管理</a>
+  <a href="/history/{{ username }}">カレンダー</a>
+  <a href="/edit/{{ username }}">残業申請</a>
+
+  <a href=""
+    ><form action="/finish/{{ username }}" method="POST">
+      <input type="submit" value="退勤" class="btn" />
+    </form>
+  </a>
+</header>
+
+{% extends "base.html" %} {% block content %}
+
+<!-- Todo section start -->
+{% if username == "Admin" %} {% if request|length < 1 %}
+<h2 style="text-align: center">申請はありません</h2>
+{% else %}
+<table class="table">
+  <tr>
+    <th class="todo-item">名前</th>
+    <th class="todo-item">申請内容</th>
+    <th class="todo-item">登録</th>
+    <th class="todo-item">許可</th>
+  </tr>
+  {% for req in request %}
+  <tr>
+    <td class="todo-body">{{ req.user }}</td>
+    <td class="todo-body">{{ req.text }}</td>
+    <td class="todo-body">{{ req.date }}</td>
+    <td class="todo-body">
+      <form
+        action="/accept/{{ req.user }}"
+        method="POST"
+        class="form-content"
+        style="margin: 0"
+      >
+        <input type="submit" value="許可" class="btn" />
+      </form>
+      <form
+        action="/reject/{{ req.user }}"
+        method="POST"
+        class="form-content"
+        style="margin: 0"
+      >
+        <input type="submit" value="拒否" class="btn" />
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %} {% else %}
+<div class="content">
+  <h1>出退勤時間の変更申請</h1>
+
+  <form action="/edit/{{ username }}" method="post" class="form-content">
+    <input
+      type="text"
+      name="date"
+      class="form-text1"
+      placeholder="YYYY-MM-DD"
+    />
+    <input type="text" name="time" class="form-text2" placeholder="HH:MM" />
+    <select name="content" class="form-text3">
+      <option value="出勤">出勤</option>
+      <option value="退勤">退勤</option>
+    </select>
+    <input type="submit" value="送信" class="btn" />
+  </form>
+</div>
+{% endif %} {% endblock %}

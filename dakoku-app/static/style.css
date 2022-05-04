@@ -229,9 +229,23 @@ form {
   background-color: black;
 }
 
+.digital {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 1rem;
+  font-size: 2rem;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(255, 255, 255);
+  height: fit-content;
+}
+
 /* text form section */
 
 .table {
+  margin: 5rem;
+
   color: white;
 }
 
@@ -240,6 +254,9 @@ form {
 .todo-action {
   padding: 15px;
   border: 1px solid white;
+}
+.table tr:nth-child(2n) {
+  background: #ffffff4a;
 }
 
 .todo-item {
@@ -265,7 +282,23 @@ form {
   padding: 10px;
   border: 1px solid black;
 }
+.form-text1 {
+  width: 30%;
+  padding: 10px;
+  border: 1px solid black;
+}
 
+.form-text2 {
+  width: 30%;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.form-text3 {
+  width: 30%;
+  padding: 10px;
+  border: 1px solid black;
+}
 /* contact section */
 
 .contact-table {

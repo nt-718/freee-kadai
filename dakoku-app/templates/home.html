@@ -3,6 +3,7 @@
   <a href="/game/{{ username }}">息抜き</a>
   <a href="/memo/{{ username }}">Todo管理</a>
   <a href="/history/{{ username }}">カレンダー</a>
+  <a href="/edit/{{ username }}">出退勤管理</a>
   <a href=""
     ><form action="/finish/{{ username }}" method="POST">
       <input type="submit" value="退勤" class="btn" />
@@ -12,7 +13,7 @@
 
 {% extends "base.html" %} {% block content %} {% if username == "Admin" %} {% if
 users|length < 1 %}
-<h2 style="text-align: center">error</h2>
+<h2 style="text-align: center">No Data</h2>
 {% else %}
 
 <table class="table">
@@ -21,12 +22,14 @@ users|length < 1 %}
     <th class="todo-item">日付</th>
     <th class="todo-item">出勤</th>
     <th class="todo-item">退勤</th>
+    <th class="todo-item">労働時間</th>
   </tr>
   {% for user in users %}
   <tr>
     <td class="todo-body">{{ user.user }}</td>
     <td class="todo-body">{{ user.day }}</td>
     <td class="todo-body">{{ user.starth }}:{{ user.startm }}</td>
+    <td class="todo-body">{{ user.endh }}:{{ user.endm }}</td>
     <td class="todo-body">{{ user.endh }}:{{ user.endm }}</td>
   </tr>
   {% endfor %}

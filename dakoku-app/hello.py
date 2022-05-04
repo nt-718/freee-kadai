@@ -1,4 +1,3 @@
-from email.policy import default
 from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -38,6 +37,17 @@ class User(db.Model):
     absence = db.Column(db.Boolean, default=False, nullable=False)
     endh = db.Column(db.String(20), nullable=False, default=23)
     endm = db.Column(db.String(20), nullable=False, default=59)
+    
+# Request
+class Request(db.Model):
+    __tablename__ = 'request'
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(20), nullable=False)
+    text = db.Column(db.String(200))
+    date = db.Column(db.String(20), nullable=False)
+    endh = db.Column(db.String(20), nullable=False)
+    endm = db.Column(db.String(20), nullable=False)
+
     
 # 欠勤メッセージ
 mail = Mail(app)
@@ -119,8 +129,8 @@ def finish(user):
             tm=et_m-int(st_m)
         
         endtime = User.query.filter_by(user=user, day=day).first() 
-        endtime.endh = th
-        endtime.endm = tm
+        endtime.endh = et_h
+        endtime.endm = et_m
         
         db.session.commit() # データベースの退勤時間を更新
             
@@ -252,6 +262,69 @@ def delete(user, id):
         return render_template('memo.html', tasks=tasks, username=user)
     except:
         return 'エラー'
+
+# 出退勤時間の変更申請
+@app.route('/edit/<user>', methods=['GET', 'POST'])
+def update(user):
+    if request.method == 'POST':
+        text = request.form.get('content')
+        time = request.form.get('time')
+        date = request.form.get('date')
+        endh = time.split(':', 1)[0]
+        endm = time.split(':', 1)[1]
+        check = Request.query.filter_by(user=user).first() # 重複チェック用
+        
+        if check is None:
+            new_request = Request(user=user, text=text, date=date, endh=endh, endm=endm)
+            db.session.add(new_request)
+            db.session.commit()
+        
+        else:
+            pass
+        
+        requests = Request.query.all()
+        return render_template('edit.html', username=user, request=requests)
+    
+    else:
+        requests = Request.query.all()
+        return render_template('edit.html', username=user, request=requests)
+
+# 出退勤時間の変更許可
+@app.route('/accept/<user>', methods=['GET', 'POST'])
+def accept(user):
+    requests = Request.query.filter_by(user=user).first()
+    endh = requests.endh
+    endm = requests.endm
+    date = requests.date
+    
+    text = requests.text
+    now_data = User.query.filter_by(user=user, day=date).first()    
+    
+    if text == "出勤":    
+        now_data.starth = endh
+        now_data.startm = endm
+    else:
+        now_data.endh = endh
+        now_data.endm = endm
+        
+    db.session.commit()
+    
+    request_to_delete = Request.query.filter_by(user=user).first()
+    db.session.delete(request_to_delete)
+    db.session.commit()
+        
+    return redirect('/edit/Admin')
+    
+
+# 出退勤時間の変更拒否
+@app.route('/reject/<user>', methods=['GET', 'POST'])
+def reject(user):
+    request_to_delete = Request.query.filter_by(user=user).first()
+    db.session.delete(request_to_delete)
+    db.session.commit()
+    
+    return redirect('/edit/Admin')
+    
     
 @app.route('/game/<user>')
 def game(user):

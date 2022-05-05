@@ -34,9 +34,7 @@
       <td class="todo-body">{{ task.memo }}</td>
       <td class="todo-body">{{ task.date_created.date() }}</td>
       <td class="todo-body">
-        <a href="/delete/{{ username }}/{{ task.id }}" class="todo-action"
-          >削除</a
-        >
+        <a href="/delete/{{ username }}/{{ task.id }}">×</a>
       </td>
     </tr>
     {% endfor %}

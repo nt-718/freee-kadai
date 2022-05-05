@@ -36,4 +36,5 @@ gunicorn 20.1.0
 - 背景画像は以下
   https://jp.depositphotos.com/13534536/stock-photo-meeting-room.html
 - コードの非効率な部分はこれから修正していけたらと思っている。
-- もしコーディングの過程を見て頂けるのであれば、memo.txt を読むよりも、それを視覚化した RX/visualize.html をご覧になってください。(未完成：5/3 時点)
+- ~~もしコーディングの過程を見て頂けるのであれば、memo.txt を読むよりも、それを視覚化した RX/visualize.html をご覧になってください。~~
+- ユーザー名「freee」でログインすると memo.txt を見やすくした visualize.html が見れます。

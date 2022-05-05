@@ -89,8 +89,14 @@ def home():
         if username == "Admin":
             tasks = Todo.query.filter_by(user=username).order_by(Todo.date_created).all() # Todoリスト取得            
             users = User.query.order_by(User.day).all()
-            return render_template('home.html', tasks=tasks,users=users, username=username, st_h=st_h, st_m=st_m)
 
+            
+            return render_template('home.html',tasks=tasks,users=users, username=username, st_h=st_h, st_m=st_m)
+        
+        elif username == "freee":
+            
+            return render_template('visualize.html')        
+        
         else:
             check = User.query.filter_by(user=username, day=day).first() # 重複チェック用
             if check is None:
@@ -258,7 +264,7 @@ def delete(user, id):
     try:
         db.session.delete(task_to_delete)
         db.session.commit()
-        tasks = Todo.query.order_by(Todo.date_created).all()
+        tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all()
         return render_template('memo.html', tasks=tasks, username=user)
     except:
         return 'エラー'

@@ -3,8 +3,7 @@
   <a href="/game/{{ username }}">息抜き</a>
   <a href="/memo/{{ username }}">Todo管理</a>
   <a href="/history/{{ username }}">カレンダー</a>
-  <a href="/edit/{{ username }}">残業申請</a>
-
+  <a href="/edit/{{ username }}">出退勤管理</a>
   <a href=""
     ><form action="/finish/{{ username }}" method="POST">
       <input type="submit" value="退勤" class="btn" />
@@ -28,7 +27,7 @@
   {% for req in request %}
   <tr>
     <td class="todo-body">{{ req.user }}</td>
-    <td class="todo-body">{{ req.text }}</td>
+    <td class="todo-body">{{ req.text }} {{ req.endh }}:{{ req.endm }}</td>
     <td class="todo-body">{{ req.date }}</td>
     <td class="todo-body">
       <form
@@ -45,7 +44,7 @@
         class="form-content"
         style="margin: 0"
       >
-        <input type="submit" value="拒否" class="btn" />
+        <input type="submit" value="拒否" class="btn" style="color: crimson" />
       </form>
     </td>
   </tr>

@@ -237,6 +237,7 @@ form {
   font-size: 2rem;
   padding: 0.5rem 2rem 0.5rem 2rem;
   border-radius: 0.5rem;
+  background-color: #ffffff10;
   border: 1px solid rgb(255, 255, 255);
   height: fit-content;
 }
@@ -268,9 +269,19 @@ form {
   width: 100%;
 }
 
-.todo-action {
-  width: 100%;
-  border: none;
+.info-item,
+.info-body,
+.info-action {
+  padding: 15px;
+  border: 1px solid white;
+}
+.info-item {
+  text-align: left;
+  width: 20%;
+}
+
+.info-body {
+  width: 20%;
 }
 
 .form-content {

@@ -30,7 +30,7 @@ class Todo(db.Model):
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    user = db.Column(db.String(20), nullable=False)
+    user = db.Column(db.String(20), nullable=False) # 20文字以上入力してもなぜか追加されます。
     day = db.Column(db.String(20), nullable=False)
     starth = db.Column(db.String(20), nullable=False)
     startm = db.Column(db.String(20), nullable=False)

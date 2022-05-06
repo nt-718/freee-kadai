@@ -10,84 +10,109 @@
       type="text/css"
       href="{{ url_for('static',filename='sudoku.css') }}"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='style.css') }}"
+    />
     <title>A Number</title>
   </head>
   <body>
-    <h1>A Number</h1>
+    <header><h1>A Number</h1></header>
+    <div class="explain">
+      <p>指定された1マスを論理とひらめきで導き出すパズル</p>
+      <br />
+      <ul>
+        【難易度】
+      </ul>
+      <li>初心者向けの初級</li>
+      <li>候補を考えることで解ける中級</li>
+      <li>候補をより細かくみて解ける上級</li>
+      <br />
+      <a href="https://play.google.com/store/apps/details?id=com.sudoku.anumber"
+        >ダウンロードはこちら：Google Playストアが開きます</a
+      >
+    </div>
 
-    <main>
-      <table class="main"></table>
-      <table class="select"></table>
-      <div class="box">
-        <div class="remove" onclick="remove()">消す</div>
+    <section class="tabs">
+      <div class="container">
+        <div id="tab-1" class="tab-item tab-border">
+          <div class="hide-sm">初級</div>
+        </div>
+        <div id="tab-2" class="tab-item">
+          <div class="hide-sm">中級</div>
+        </div>
+        <div id="tab-3" class="tab-item">
+          <div class="hide-sm">上級</div>
+        </div>
       </div>
-      <h2></h2>
-    </main>
+    </section>
+
+    <section class="tab-content">
+      <div class="container">
+        <!-- Tab Content 1 -->
+        <div id="tab-1-content" class="tab-content-item show">
+          <div class="tab-content-inner">
+            <div class="content">
+              <img src="../static/app-stracture.png" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Content 2 -->
+        <div id="tab-2-content" class="tab-content-item">
+          <div class="tab-content-inner">
+            <div class="content">
+              <img src="../static/app-tree.png" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab Content 3 -->
+        <div id="tab-3-content" class="tab-content-item">
+          <div class="tab-content-inner">
+            <div class="content">
+              <img src="../static/background.jpg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <script>
-      const question = [
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0],
-      ];
+      const tabItems = document.querySelectorAll(".tab-item");
+      const tabContentItems = document.querySelectorAll(".tab-content-item");
 
-      let place;
-
-      init();
-      // ゲーム画面生成
-      function init() {
-        const main = document.querySelector(".main");
-        const select = document.querySelector(".select");
-
-        for (let i = 0; i < 9; i++) {
-          let tr = document.createElement("tr");
-          for (let j = 0; j < 9; j++) {
-            let td = document.createElement("td");
-            td.onclick = mainClick;
-            tr.appendChild(td);
-            if (question[i][j] != 0) {
-              td.textContent = question[i][j];
-            } else {
-              td.textContent = null;
-              td.classList.add("clickenable");
-            }
-          }
-          main.appendChild(tr);
-        }
-
-        for (let i = 0; i < 9; i++) {
-          let td = document.createElement("td");
-          td.onclick = selectClick;
-          td.value = i + 1;
-          select.appendChild(td);
-          td.textContent = i + 1;
-        }
+      // Select tab content item
+      function selectItem(e) {
+        // Remove all show and border classes
+        removeBorder();
+        removeShow();
+        // Add border to current tab item
+        this.classList.add("tab-border");
+        // Grab content item from DOM
+        const tabContentItem = document.querySelector(`#${this.id}-content`);
+        // Add show class
+        tabContentItem.classList.add("show");
       }
 
-      // 問題パネルのマスが押された時の処理
-      function mainClick(e) {
-        if (place != undefined) {
-          place.classList.remove("mainClick");
-        }
-
-        place = e.target;
-        place.classList.add("mainClick");
+      // Remove bottom borders from all tab items
+      function removeBorder() {
+        tabItems.forEach((item) => {
+          item.classList.remove("tab-border");
+        });
       }
 
-      // 数字選択のマスが押された時の処理
-      function selectClick(e) {
-        place.textContent = e.target.value;
+      // Remove show class from all content items
+      function removeShow() {
+        tabContentItems.forEach((item) => {
+          item.classList.remove("show");
+        });
       }
 
-      //消す処理
-      function remove() {
-        place.textContent = null;
-      }
+      // Listen for tab item click
+      tabItems.forEach((item) => {
+        item.addEventListener("click", selectItem);
+      });
     </script>
   </body>
 </html>

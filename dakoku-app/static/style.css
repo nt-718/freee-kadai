@@ -236,10 +236,29 @@ form {
   margin: 1rem;
   font-size: 2rem;
   padding: 0.5rem 2rem 0.5rem 2rem;
-  border-radius: 0.5rem;
-  background-color: #ffffff10;
-  border: 1px solid rgb(255, 255, 255);
+  background-color: rgba(255, 255, 255, 0.1);
   height: fit-content;
+  position: relative;
+  border: 1px solid white;
+}
+
+.digital::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 50%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.digital::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 /* text form section */

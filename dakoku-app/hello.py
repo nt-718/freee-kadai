@@ -156,13 +156,13 @@ def msg():
             newinfo = User(user=username, day=day, starth=23, startm=59, absence=True)
             db.session.add(newinfo)
             db.session.commit()
-            return redirect('/')
+            return render_template('message.html')
         else:            
             absence.absence = True
             db.session.commit()
         
         
-        return render_template('message.html', absence=absence)
+        return render_template('message.html')
     
 
     # if request.method == 'POST':

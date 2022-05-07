@@ -2,6 +2,10 @@
 
 ### 明治大学 経営学部経営学科 4 年 中川崇大
 
+### <br>アプリはこちら ↓<br>
+
+https://freee-dakoku.herokuapp.com/
+
 ### <br>アプリ作成のコンセプト
 
 - シンプルでかつ飽きさせない動きのある UI
@@ -16,15 +20,24 @@
 ### 各バージョン
 
 ```
->> flask --version
-Python 3.10.4
-Flask 2.1.1
-Werkzeug 2.0.3
 
-SQLAlchemy 1.4.35
-Flask-Mail 0.9.1
-Flask-SQLAlchemy  2.5.1
-gunicorn 20.1.0
+Flask==2.1.1
+Flask-Bootstrap==3.3.7.1
+Flask-Mail==0.9.1
+Flask-SQLAlchemy==2.5.1
+Jinja2==3.0.3
+gunicorn==20.1.0
+keyboard==0.13.5
+python-dateutil==2.8.2
+regex==2022.3.2
+requests==2.27.1
+requests-oauthlib==1.3.1
+SQLAlchemy==1.4.35
+Werkzeug==2.0.3
+pip==22.0.4
+MarkupSafe==2.1.1
+itsdangerous==2.1.2
+click==8.0.4
 ```
 
 <br>

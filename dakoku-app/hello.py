@@ -10,8 +10,6 @@ from sqlalchemy import true
 
 # データベース
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///info.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 
 
@@ -96,6 +94,9 @@ def home():
         
         day=datetime.now().date()
         username = request.form.get('username')
+        # if username == "":
+        #     return redirect('/')
+        
         if username == "Admin":
             tasks = Todo.query.filter_by(user=username).order_by(Todo.date_created).all() # Todoリスト取得            
             users = User.query.order_by(User.day).all()

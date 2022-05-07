@@ -26,6 +26,9 @@ class Todo(db.Model):
     memo = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
+    def __repr__(self):
+        return f"Todo('{self.user}', '{self.memo}', '{self.date_created}')"
+    
 # ユーザー情報
 class User(db.Model):
     __tablename__ = 'users'
@@ -38,6 +41,9 @@ class User(db.Model):
     endh = db.Column(db.String(20), nullable=False, default=23)
     endm = db.Column(db.String(20), nullable=False, default=59)
     
+    def __repr__(self):
+        return f"User('{self.user}', '{self.day}', '{self.starth}:{self.startm}', '{self.endh}:{self.endm}', '{self.absence}')"
+    
 # Request
 class Request(db.Model):
     __tablename__ = 'request'
@@ -47,6 +53,10 @@ class Request(db.Model):
     date = db.Column(db.String(20), nullable=False)
     endh = db.Column(db.String(20), nullable=False)
     endm = db.Column(db.String(20), nullable=False)
+    
+    def __repr__(self):
+        return f"Request('{self.user}', '{self.txt}', '{self.date}', '{self.endh}:{self.endm}')"
+    
 
     
 # 欠勤メッセージ

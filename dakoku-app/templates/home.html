@@ -38,7 +38,13 @@ users|length < 1 %}
     <td class="info-body">{{ user.user }}</td>
     <td class="info-body">{{ user.day }}</td>
     <td class="info-body">{{ user.starth }}:{{ user.startm }}</td>
+    {% if user.endh == "23" and user.endm == "59" %}
+    <td class="info-body" style="color: crimson">
+      退勤ボタンが押されていません。
+    </td>
+    {% else %}
     <td class="info-body">{{ user.endh }}:{{ user.endm }}</td>
+    {% endif %}
   </tr>
 
   {% endif %} {% endfor %}

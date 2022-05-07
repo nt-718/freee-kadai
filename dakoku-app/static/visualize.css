@@ -4,7 +4,22 @@
   box-sizing: border-box;
 }
 body {
-  background-color: #ffffff;
+  color: black;
+  font-weight: bold;
+  background: -webkit-gradient(
+      linear,
+      left top,
+      left bottom,
+      from(rgba(0, 0, 0, 0.5)),
+      to(rgba(0, 0, 0, 0.5))
+    ),
+    url(../static/background.jpg) no-repeat;
+  background: linear-gradient(hsla(0, 0%, 0%, 0.8), rgba(0, 0, 0, 0.8)),
+    url(../static/background.jpg) no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  overflow-x: hidden;
 }
 p {
   font-size: 15px;
@@ -13,8 +28,8 @@ p {
 .header {
   text-align: center;
   font-size: 3rem;
-  color: #ffffff;
-  background-color: #323232;
+  color: rgb(0, 0, 0);
+  background-color: rgba(255, 255, 255);
   padding: 1rem;
 }
 
@@ -26,7 +41,7 @@ p {
   width: 3px;
   top: 8%;
   height: 500%;
-  background-color: #323232;
+  background-color: white;
 }
 
 .container {
@@ -45,8 +60,8 @@ p {
 .content {
   flex-basis: 50%;
   padding: 1rem 2rem 1rem 2rem;
-  background-color: #323232;
-  color: #ffffff;
+  background-color: white;
+  color: black;
   border-radius: 0.5rem;
   position: relative;
   overflow-wrap: break-word;
@@ -59,11 +74,11 @@ p {
   transform: translate(100%, -50%);
   width: 80px;
   height: 3px;
-  background-color: #323232;
+  background-color: white;
   right: 0;
 }
 .date {
-  color: #323232;
+  color: white;
   font-weight: 500;
   font-size: 1.5rem;
   font-weight: bold;
@@ -86,14 +101,14 @@ p {
 
 .read-more-btn {
   padding-top: 1rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: black;
   cursor: pointer;
 }
 
 .read-more-text {
   display: none;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.8);
+  color: black;
 }
 
 .read-more-text--show {

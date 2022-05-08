@@ -4,9 +4,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from flask_mail import Message
 from datetime import datetime
+import pytz
 import random
-
 from sqlalchemy import true
+
+# タイムゾーンの設定
+jst = pytz.timezone('Asia/Tokyo')
 
 # データベース
 app = Flask(__name__)
@@ -67,7 +70,7 @@ rand = random.random()
 @app.route("/", methods=['GET', 'POST'])
 def index():
 
-    st=datetime.now() # メッセージ内容のバリエーションのため
+    st=datetime.now(jst) # メッセージ内容のバリエーションのため
     st_h=st.hour
     st_m=st.minute
     return render_template('index.html',rand=rand, st_h=st_h, st_m=st_m)
@@ -75,7 +78,7 @@ def index():
 # ホーム ヘッダーから飛んだとき用
 @app.route('/home/<user>', methods=['GET', 'POST'])
 def userhome(user):
-    st=datetime.now() # データベース用
+    st=datetime.now(jst) # データベース用
     st_h=st.hour
     st_m=st.minute
     tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all() # Todoリスト取得
@@ -86,18 +89,18 @@ def userhome(user):
 # ホーム 出勤ボタンを押したとき用
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    st=datetime.now() # データベース用
+    st=datetime.now(jst) # データベース用
     st_h=st.hour
     st_m=st.minute
     
     if request.method == 'POST':
         
-        day=datetime.now().date()
+        day=datetime.now(jst).date()
         username = request.form.get('username')
-        # if username == "":
-        #     return redirect('/')
+        if username == "":
+            return redirect('/')
         
-        if username == "Admin":
+        elif username == "Admin":
             tasks = Todo.query.filter_by(user=username).order_by(Todo.date_created).all() # Todoリスト取得            
             users = User.query.order_by(User.day).all()
 
@@ -129,10 +132,10 @@ def finish(user):
     if request.method == 'POST':
         
         # ユーザーと時刻をフィルター
-        day=datetime.now().date()
+        day=datetime.now(jst).date()
         time = User.query.filter_by(user=user, day=day).first()
         
-        et=datetime.now()  # 退勤時刻
+        et=datetime.now(jst)  # 退勤時刻
         et_h=et.hour
         et_m=et.minute
         st_h=time.starth # データベースにある出勤時刻(時)
@@ -160,7 +163,7 @@ def finish(user):
 @app.route("/message", methods=['GET', 'POST'])
 def msg():
     if request.method == 'POST':
-        day=datetime.now().date()
+        day=datetime.now(jst).date()
         username = request.form.get('username')
         absence = User.query.filter_by(user=username, day=day).first()
         if absence is None:

@@ -20,7 +20,7 @@ https://freee-dakoku.herokuapp.com/
 ### 各バージョン
 
 ```
-
+>> version
 Flask==2.1.1
 Flask-Bootstrap==3.3.7.1
 Flask-Mail==0.9.1
@@ -38,6 +38,8 @@ pip==22.0.4
 MarkupSafe==2.1.1
 itsdangerous==2.1.2
 click==8.0.4
+pytz==2021.3
+
 ```
 
 <br>

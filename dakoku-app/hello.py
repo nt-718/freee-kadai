@@ -27,6 +27,7 @@ class Todo(db.Model):
     memo = db.Column(db.String(200), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
+    # データベース中身チェック
     def __repr__(self):
         return f"Todo('{self.user}', '{self.memo}', '{self.date_created}')"
     
@@ -41,7 +42,8 @@ class User(db.Model):
     absence = db.Column(db.Boolean, default=False, nullable=False)
     endh = db.Column(db.String(20), nullable=False, default=23)
     endm = db.Column(db.String(20), nullable=False, default=59)
-    
+
+    # データベース中身チェック    
     def __repr__(self):
         return f"User('{self.user}', '{self.day}', '{self.starth}:{self.startm}', '{self.endh}:{self.endm}', '{self.absence}')"
     
@@ -55,82 +57,121 @@ class Request(db.Model):
     endh = db.Column(db.String(20), nullable=False)
     endm = db.Column(db.String(20), nullable=False)
     
+    # データベース中身チェック  
     def __repr__(self):
-        return f"Request('{self.user}', '{self.txt}', '{self.date}', '{self.endh}:{self.endm}')"
+        return f"Request('{self.user}', '{self.text}', '{self.date}', '{self.endh}:{self.endm}')"
     
 
     
 # 欠勤メッセージ
 mail = Mail(app)
 
+
 # ランダム用
 rand = random.random()
+
 
 # 出勤
 @app.route("/", methods=['GET', 'POST'])
 def index():
-
-    st=datetime.now(jst) # メッセージ内容のバリエーションのため
+    
+    # メッセージ内容のバリエーションのために時間取得
+    st=datetime.now(jst) 
     st_h=st.hour
     st_m=st.minute
     return render_template('index.html',rand=rand, st_h=st_h, st_m=st_m)
 
+
 # ホーム ヘッダーから飛んだとき用
 @app.route('/home/<user>', methods=['GET', 'POST'])
 def userhome(user):
-    st=datetime.now(jst) # データベース用
-    st_h=st.hour
-    st_m=st.minute
-    tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all() # Todoリスト取得
-    users = User.query.order_by(User.day).all()
     
-    return render_template('home.html',username=user, tasks=tasks,users=users, st_h=st_h, st_m=st_m)      
+     # データベース用
+    st=datetime.now(jst)
+    st_h=st.hour
+    st_m=st.minute   
+    
+    if request.method == 'POST':    
+        
+        # 管理者
+        if user == 'Admin':                   
+            usr = request.form.get('filtername')
+            tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all() # Todoリスト取得
+            
+            # Admin画面フィルター
+            if usr == '': 
+                users = User.query.order_by(User.day).all() # 全ユーザーリスト取得
+            elif usr == 'all':
+                users = User.query.order_by(User.day).all() # 全ユーザーリスト取得
+            else:
+                users = User.query.filter_by(user=usr).all() # 個別ユーザーリスト取得         
+            return render_template('home.html',username=user, tasks=tasks,users=users, st_h=st_h, st_m=st_m)      
+        
+        # 管理者以外
+        else:          
+            tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all() # Todoリスト取得
+            users = User.query.order_by(User.day).all() # ユーザーリスト取得      
+            return render_template('home.html',username=user, tasks=tasks,users=users, st_h=st_h, st_m=st_m)      
+   
+    else:
+        tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all() # Todoリスト取得
+        users = User.query.order_by(User.day).all() # ユーザーリスト取得
+        return render_template('home.html',username=user, tasks=tasks,users=users, st_h=st_h, st_m=st_m)      
+
 
 # ホーム 出勤ボタンを押したとき用
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    st=datetime.now(jst) # データベース用
+    
+    # データベース用
+    st=datetime.now(jst)
     st_h=st.hour
     st_m=st.minute
     
     if request.method == 'POST':
-        
         day=datetime.now(jst).date()
         username = request.form.get('username')
+        
+        # 名前を入力せずに出勤したときの処理
         if username == "":
             return redirect('/')
         
+        # 管理者として出勤したときの処理
         elif username == "Admin":
             tasks = Todo.query.filter_by(user=username).order_by(Todo.date_created).all() # Todoリスト取得            
-            users = User.query.order_by(User.day).all()
-
-            
+            users = User.query.order_by(User.day).all() # ユーザーリスト取得
             return render_template('home.html',tasks=tasks,users=users, username=username, st_h=st_h, st_m=st_m)
         
-        elif username == "freee":
-            
+        # visualize.html用の処理
+        elif username == "freee":  
             return render_template('visualize.html')        
         
         else:
             check = User.query.filter_by(user=username, day=day).first() # 重複チェック用
+            
+            # 初出勤
             if check is None:
                 newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+                # データベースに追加
                 db.session.add(newinfo)
                 db.session.commit()
                 msg = ""
+            
+            # 2度目以降の出勤
             else:
                 msg = "Welcome back!"
                 pass
+            
             tasks = Todo.query.filter_by(user=username).order_by(Todo.date_created).all() # Todoリスト取得            
-            users = User.query.order_by(User.day).all()
+            users = User.query.order_by(User.day).all() # ユーザーリスト取得
             return render_template('home.html',msg=msg ,tasks=tasks,users=users, username=username, st_h=st_h, st_m=st_m)
 
 
 # 退勤
 @app.route('/finish/<user>', methods=['GET', 'POST'])
 def finish(user):
-    if request.method == 'POST':
-        
+    
+    if request.method == 'POST':    
         # ユーザーと時刻をフィルター
         day=datetime.now(jst).date()
         time = User.query.filter_by(user=user, day=day).first()
@@ -147,14 +188,15 @@ def finish(user):
         else:
             th=et_h-int(st_h)
             tm=et_m-int(st_m)
-        
+            
+        # データベースの退勤時間を更新
         endtime = User.query.filter_by(user=user, day=day).first() 
         endtime.endh = et_h
         endtime.endm = et_m
-        
-        db.session.commit() # データベースの退勤時間を更新
+        db.session.commit() 
             
         return render_template('finish.html',username=user, et_h=et_h, et_m=et_m, th=th, tm=tm)
+    
     else:
         return render_template('finish.html')
 
@@ -162,19 +204,23 @@ def finish(user):
 # 欠勤メッセージ
 @app.route("/message", methods=['GET', 'POST'])
 def msg():
+    
     if request.method == 'POST':
         day=datetime.now(jst).date()
         username = request.form.get('username')
+        
+        # 重複チェック
         absence = User.query.filter_by(user=username, day=day).first()
+        
         if absence is None:
-            newinfo = User(user=username, day=day, starth=23, startm=59, absence=True)
+            newinfo = User(user=username, day=day, starth=23, startm=59, absence=True) # Trueにして追加
             db.session.add(newinfo)
             db.session.commit()
             return render_template('message.html')
-        else:            
-            absence.absence = True
-            db.session.commit()
         
+        else:            
+            absence.absence = True # Trueに更新
+            db.session.commit()
         
         return render_template('message.html')
     
@@ -242,18 +288,22 @@ def calendar(user):
                     }
                 
         events.append(list) # 過去のデータ分の出勤記録も表示するためにappend
+        
     return render_template('history.html',username=user, events=events)
+
 
 # Todo
 @app.route('/memo/<user>', methods=['GET', 'POST'])
 def todo(user):
-    tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all()
+    
+    tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all() # Todoリスト取得
     return render_template('memo.html', tasks=tasks, username=user)
 
 
 # タスク追加
 @app.route('/add/<user>', methods=['GET', 'POST'])
 def memo(user):
+    
     if request.method == 'POST':
         task_content = request.form['content']
         new_task = Todo(memo=task_content, user=user)
@@ -263,8 +313,10 @@ def memo(user):
             db.session.commit()
             tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all()
             return render_template('memo.html',tasks=tasks, username=user)
+        
         except:
             return "エラー"
+        
     else:
         tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all()
         return render_template('memo.html', tasks=tasks, username=user)
@@ -273,6 +325,7 @@ def memo(user):
 # タスク削除
 @app.route('/delete/<user>/<int:id>')
 def delete(user, id):
+    
     task_to_delete = Todo.query.get_or_404(id)
 
     try:
@@ -280,19 +333,25 @@ def delete(user, id):
         db.session.commit()
         tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all()
         return render_template('memo.html', tasks=tasks, username=user)
+   
     except:
         return 'エラー'
+
 
 # 出退勤時間の変更申請
 @app.route('/edit/<user>', methods=['GET', 'POST'])
 def update(user):
+    
     if request.method == 'POST':
+        # フォームから取得
         text = request.form.get('content')
         time = request.form.get('time')
         date = request.form.get('date')
-        endh = time.split(':', 1)[0]
-        endm = time.split(':', 1)[1]
-        check = Request.query.filter_by(user=user).first() # 重複チェック用
+        endh = time.split(':', 1)[0] # 分割
+        endm = time.split(':', 1)[1] # 分割
+        
+        # 重複チェック用
+        check = Request.query.filter_by(user=user).first()
         
         if check is None:
             new_request = Request(user=user, text=text, date=date, endh=endh, endm=endm)
@@ -309,26 +368,34 @@ def update(user):
         requests = Request.query.all()
         return render_template('edit.html', username=user, request=requests)
 
+
 # 出退勤時間の変更許可
 @app.route('/accept/<user>', methods=['GET', 'POST'])
 def accept(user):
+    
+    # ユーザーの申請情報を取得
     requests = Request.query.filter_by(user=user).first()
     endh = requests.endh
     endm = requests.endm
     date = requests.date
-    
     text = requests.text
+    
+    # ユーザー情報のデータを取得
     now_data = User.query.filter_by(user=user, day=date).first()    
     
+    # 出勤時間の変更
     if text == "出勤":    
         now_data.starth = endh
         now_data.startm = endm
+    
+    # 退勤時間の変更
     else:
         now_data.endh = endh
         now_data.endm = endm
         
     db.session.commit()
     
+    # 変更申請の削除
     request_to_delete = Request.query.filter_by(user=user).first()
     db.session.delete(request_to_delete)
     db.session.commit()
@@ -339,13 +406,15 @@ def accept(user):
 # 出退勤時間の変更拒否
 @app.route('/reject/<user>', methods=['GET', 'POST'])
 def reject(user):
+    
     request_to_delete = Request.query.filter_by(user=user).first()
     db.session.delete(request_to_delete)
     db.session.commit()
     
     return redirect('/edit/Admin')
     
-    
+
+# ゲーム
 @app.route('/game/<user>')
 def game(user):
     return render_template('game.html', username=user)
@@ -357,6 +426,7 @@ def counter():
 @app.route('/game/sudoku')
 def sudoku():
     return render_template('sudoku.html')
+
 
 # debug
 if __name__=='__main__':

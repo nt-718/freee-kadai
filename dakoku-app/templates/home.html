@@ -15,6 +15,16 @@
 users|length < 1 %}
 <h2 style="text-align: center">No Data</h2>
 {% else %}
+<p style="padding-top: 3rem">フィルター</p>
+<form action="/home/Admin" method="POST">
+  <input
+    type="text"
+    name="filtername"
+    class="form-text"
+    placeholder="username or all"
+  />
+  <input type="submit" value="決定" class="btn" />
+</form>
 
 <table class="table">
   <tr>

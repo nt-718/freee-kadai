@@ -11,10 +11,8 @@
   </a>
 </header>
 
-{% extends "base.html" %} {% block content %}
-
-<!-- Todo section start -->
-{% if username == "Admin" %} {% if request|length < 1 %}
+{% extends "base.html" %} {% block content %} {% if username == "Admin" %} {% if
+request|length < 1 %}
 <h2 style="text-align: center">申請はありません</h2>
 {% else %}
 <table class="table">

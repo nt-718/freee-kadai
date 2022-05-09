@@ -51,10 +51,17 @@ pytz==2021.3
 ### ノート
 
 - アプリ開発を始めたころから memo.txt で制作過程の記録をとってあります。
+
 - ユーザー名「freee」でログインすると memo.txt を見やすくした visualize.html が見れます。
+
+- ユーザー名「Admin」でログインすると全ユーザーの出退勤管理ができます。
+
 - 背景画像は以下<br>
   https://jp.depositphotos.com/13534536/stock-photo-meeting-room.html
-- コードの非効率な部分はこれから修正していけたらと思っている。
+
+- デプロイ後の動作テストを行いました。<br>
+  ※データベースの簡単なテストも行っています。
+  <br>https://youtu.be/OIgalNEdLFQ
 
 <br>
 

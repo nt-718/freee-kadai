@@ -383,17 +383,25 @@ def accept(user):
     # ユーザー情報のデータを取得
     now_data = User.query.filter_by(user=user, day=date).first()    
     
-    # 出勤時間の変更
-    if text == "出勤":    
-        now_data.starth = endh
-        now_data.startm = endm
+    if now_data != None:
     
-    # 退勤時間の変更
-    else:
-        now_data.endh = endh
-        now_data.endm = endm
+        # 出勤時間の変更
+        if text == "出勤":    
+            now_data.starth = endh
+            now_data.startm = endm
         
-    db.session.commit()
+        # 退勤時間の変更
+        else:
+            now_data.endh = endh
+            now_data.endm = endm
+        
+        db.session.commit()
+    
+    # 出勤していない状態での出勤申請
+    else:
+        new_data = User(user=user, day=date, starth=endh, startm=endm) 
+        db.session.add(new_data)
+        db.session.commit()
     
     # 変更申請の削除
     request_to_delete = Request.query.filter_by(user=user).first()

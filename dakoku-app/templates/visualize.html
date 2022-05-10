@@ -22,17 +22,29 @@
   <body>
     <h1 class="header">4/15 説明会</h1>
     <main>
-      <div class="container">
+      <d class="container">
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.アプリの構成を考える
+              アプリの構成と使う言語
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
 
             <p class="read-more-text">
               <br />
-              ReactかPythonで書くことに決める。<br />まずはReactの勉強からスタート。
+              アプリの構成<br />
+              出勤時：名前を入力してボタンをクリック(その時刻と名前を記録しておく)<br />
+              ⇒メッセージを表示<br />
+              例．今日も一日頑張ろう！<br />
+              退勤時：ボタンを入力<br />
+              ⇒メッセージと労働時間を表示　例．一日お疲れさまでした！(8時間)<br />
+              ※記録しておいた時間から労働時間を計算。<br /><br />
+              〇使用する言語(候補)<br />
+              ・Python⇒Pythonでのアプリ開発の経験は無し<br />
+              ・React⇒環境構築がほとんど出来ている<br />
+              ・Flutter⇒別pcに環境は出来ている。<br />
+              ・HTML/CSS/Javascript⇒アプリというよりページになりそう(？)<br />
+              ・Ruby⇒以前Railsの環境構築に失敗している。<br />
+              まずはReactの勉強からスタート。
             </p>
             <p class="read-more-btn">コメントを見る</p>
           </div>
@@ -42,11 +54,10 @@
         <div class="memo right">
           <div class="date">4/18,19</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">1.React tutorial</p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
+            <p data-aos="fade-left" data-aos-delay="150">ReactからPythonへ</p>
             <p class="read-more-text">
               <br />
-              2日頑張ってみたが時間の制約とJavaScriptの難易度から断念。
+              Reactでの開発は時間的に厳しいと考え断念。
               <br />Pythonにシフトし、Flaskの勉強を開始。
             </p>
             <p class="read-more-btn">コメントを見る</p>
@@ -55,26 +66,28 @@
 
         <div class="memo left">
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">1.Flask Tutorial</p>
+            <p data-aos="fade-left" data-aos-delay="150">
+              Flask チュートリアル
+            </p>
             <p class="read-more-text">
               <br />
-              Youtube動画とFlask Documentで勉強
+              Youtube動画とFlask Documentsで勉強<br />
             </p>
             <p class="read-more-btn">コメントを見る</p>
           </div>
           <div class="date">4/20,21</div>
         </div>
+
         <div class="memo right">
           <div class="date">4/22</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">1.開発スタート</p>
-            <p data-aos="fade-left" data-aos-delay="300">
-              2.Githubのrepositoryを作る
-            </p>
+            <p data-aos="fade-left" data-aos-delay="150">開発スタート！</p>
             <p class="read-more-text">
               <br />
-              出退勤ボタンと労働時間の計算ができた。
-              <br />データベースの不具合との格闘スタート。<br />Githubでの管理スタート。
+              基礎となる出退勤ボタンと労働時間の計算ができた。<br />
+              画面上部にはアナログ時計を表示。<br />
+              データベースの不具合との格闘スタート。<br />
+              Githubでの管理スタート。
             </p>
             <p class="read-more-btn">コメントを見る</p>
           </div>
@@ -83,153 +96,298 @@
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.データベース不具合修正
+              データベースとの格闘、機能の追加
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">2.デザイン改善</p>
+
             <p class="read-more-text">
               <br />
-              IntegrityErrorとその解決。
-              <br />欠勤の追加とメール送信機能(未解決)。<br />メッセージを場合分け。
+              IntegrityErrorとその解決。<br />
+              Routingの理解が間違っていた？<br />
+              欠勤の追加とメール送信機能(未解決)。<br />
+              メッセージを場合分け。
             </p>
             <p class="read-more-btn">コメントを見る</p>
           </div>
           <div class="date">4/23</div>
         </div>
+
         <div class="memo right">
-          <div class="date">4/18,19</div>
+          <div class="date">4/24</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">1.React tutorial</p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
+            <p data-aos="fade-left" data-aos-delay="150">データベースとの格闘、メッセージ機能のエラー</p>
+            <p class="read-more-text">
+              <br />
+              .query.all()でデータをとってきたときにはfor文を使う必要があった。<br />
+              todoリストを追加<br />
+              カレンダーを追加<br />
+              メッセージ送信のエラーにはTCP/IP通信(?)の知識が必用になりそう…<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
         </div>
+
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.実際に開発スタート
+              GithubのURLを提出！
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">
-              2.Githubのrepositoryを作る
+
+            <p class="read-more-text">
+              <br />
+              個人のカレンダーに一日だけで複数件の出勤情報が表示される。<br />
+              リストの重複をset()で削除しようとしたが、unhashable type: dictとでる。<br />
+              Herokuへのデプロイをする準備ができた。<br />
             </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
-          <div class="date">4/20,21</div>
+          <div class="date">4/25</div>
         </div>
+
         <div class="memo right">
-          <div class="date">4/22</div>
+          <div class="date">4/26</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">
-              1.データベース不具合修正
+            <p data-aos="fade-left" data-aos-delay="150">打刻アプリとは</p>
+            <p class="read-more-text">
+              <br />
+              一度ホームから離れた時に、二度目の出勤をしなければならない。<br />
+              そもそも打刻アプリにホーム画面はあるのか？<br />
+              データ重複の解決案<br />
+              1.範囲指定のdistinct(一度は重複データを生成するアプローチ)<br />
+              2.登録するときに条件分岐(そもそも重複データを生まないアプローチ)<br />
+              3.全ての情報を取り込んでから、条件に合うものだけ利用(重複データををそのままにするアプローチ)<br />
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">2.デザイン改善</p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
         </div>
+
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.アプリの構成を考える
+              オンライン用の履歴書の準備
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
+
+            <p class="read-more-text">
+              <br />
+              今後のメモ<br />
+              ルーティングの書き直し<br />
+              労働時間の計算に使うデータをデータベースから取得<br />
+              データベースに記録するタイミングの修正<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
-          <div class="date">4/17</div>
+          <div class="date">4/27</div>
         </div>
+
         <div class="memo right">
-          <div class="date">4/18,19</div>
+          <div class="date">4/28</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">1.React tutorial</p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
+            <p data-aos="fade-left" data-aos-delay="150">データベースの重複</p>
+            <p class="read-more-text">
+              <br />
+              出勤ボタンを押したとき、入力した名前とその日の日付が、最新のデータベースのなかでともに一致しているものが存在していなければそれらのデータを追加するようにする。
+<br />
+              日付でフィルターをかけたときには上手く機能したが、ユーザー名でフィルターをかけたときにエラーが出た。<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
         </div>
+
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.実際に開発スタート
+              データベースの中身をcatではみない
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">
-              2.Githubのrepositoryを作る
+
+            <p class="read-more-text">
+              <br />
+              データベースの中身をcatコマンドで確認するのがよくなかった。<br />
+              ⇒データを消してもcatの結果に反映されなかったり、データの行数が増えると追加されたかどうかの確認もできなくなった。<br />
+              ⇒DB browser for SQLite(Ubuntu)を入れたが、起動すらせず、htmlに表示して確認することにした。<br />
+              ※メモに書いてあるリロード中の操作は関係なかった。<br />
+ 
             </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
-          <div class="date">4/20,21</div>
+          <div class="date">4/29</div>
         </div>
+
         <div class="memo right">
-          <div class="date">4/22</div>
+          <div class="date">4/30</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">
-              1.データベース不具合修正
+            <p data-aos="fade-left" data-aos-delay="150">データベースとの格闘、決着</p>
+            <p class="read-more-text">
+              <br />
+              User.query.filter_by(user=username, day=day)の最後に.allや.firstをつける必要があった。<br />
+              .firstをつけるとNoneでの判定ができるとFlaskのドキュメントに書いてあり、実行。<br />
+              実際にテストしてみて、重複していないことを確認できた。<br />
+              カレンダーの出勤状況をユーザーごとに管理<br />
+              ユーザーごとに労働時間を管理<br />
+              ボタンやリンクのデザインを変更<br />
+              ヘッダーを追加<br />
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">2.デザイン改善</p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
         </div>
+
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.アプリの構成を考える
+              ヘッダーの行き来を可能に
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
+
+            <p class="read-more-text">
+              <br />
+              ヘッダーからページを移動したときにユーザー情報が保持されない問題を解決<br />
+              Todoリストの追加や削除のredirectが上手く機能しない<br />
+              コンテンツ改善として息抜き(ゲーム)ページを追加<br />
+              カウンターと数独を予定<br />
+              カウンターは素数時に赤文字にする機能を追加(後日エラーに気付く)<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
-          <div class="date">4/17</div>
+          <div class="date">5/1</div>
         </div>
+
         <div class="memo right">
-          <div class="date">4/18,19</div>
+          <div class="date">5/2</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">1.React tutorial</p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
+            <p data-aos="fade-left" data-aos-delay="150">数独ページの案を考える</p>
+            <p class="read-more-text">
+              <br />
+              2が素数であることを忘れていた。<br />
+              数独(A Number)を実際に解けるようにしたかったが、Javascriptでそれを書く実力がなく断念<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
         </div>
+
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.実際に開発スタート
+              データベース周りの改善
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">
-              2.Githubのrepositoryを作る
+
+            <p class="read-more-text">
+              <br />
+              Todoリストをユーザーごとに管理<br />
+              データベースに欠勤情報を追加し、カレンダーにも反映<br />
+              欠勤時メッセージの送信機能はコメントアウト<br />
+              退勤時刻のデータも追加<br />
+              Admin(管理者)専用の画面を追加<br />
             </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
-          <div class="date">4/20,21</div>
+          <div class="date">5/3</div>
         </div>
+
         <div class="memo right">
-          <div class="date">4/22</div>
+          <div class="date">5/4</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">
-              1.データベース不具合修正
+            <p data-aos="fade-left" data-aos-delay="150">出退勤時間の変更申請</p>
+            <p class="read-more-text">
+              <br />
+              アナログ時計の下にデジタル時計を追加<br />
+              数独ページのためにJavaScriptの基礎を勉強したが、あくまでメインの機能ではなく、A Numberの紹介ページであるため、画像で問題を載せることにした。<br />
+              出退勤時間の変更申請ができるページを作った<br />
+              Adminでそのページを開くと申請の許可ができる予定<br />
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">2.デザイン改善</p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
         </div>
+
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.アプリの構成を考える
+              Admin画面の改善
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
+
+            <p class="read-more-text">
+              <br />
+              2から順に割って素数判定をする際に、平方根までで十分と気づいた。<br />
+              Admin画面の欠勤表示と出退勤申請の受諾判断が可能に<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
-          <div class="date">4/17</div>
+          <div class="date">5/5</div>
         </div>
+
         <div class="memo right">
-          <div class="date">4/18,19</div>
+          <div class="date">5/6</div>
           <div class="content">
-            <p data-aos="fade-left" data-aos-delay="150">1.React tutorial</p>
-            <p data-aos="fade-left" data-aos-delay="300">2.Gitの勉強</p>
+            <p data-aos="fade-left" data-aos-delay="150">A Numberページの枠組み完成</p>
+            <p class="read-more-text">
+              <br />
+             画像で問題を紹介<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
         </div>
+
         <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.実際に開発スタート
+              いよいよデプロイ
             </p>
-            <p data-aos="fade-left" data-aos-delay="300">
-              2.Githubのrepositoryを作る
+
+            <p class="read-more-text">
+              <br />
+              友人にアプリを見せてレヴューをもらった<br />
+              ⇒強いて言えばデータベース等のテストをしておくと良いかもという意見をもらう<br />
+              エラーがなかなか解消されず3時間ほどかかったが無事デプロイ完了</br>
             </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
-          <div class="date">4/20,21</div>
+          <div class="date">5/7</div>
         </div>
+
         <div class="memo right">
-          <div class="date">4/22</div>
+          <div class="date">5/8</div>
+          <div class="content">
+            <p data-aos="fade-left" data-aos-delay="150">実際にWebに公開してみて</p>
+            <p class="read-more-text">
+              <br />
+              画面を移動するたびに一瞬白い画面が見えてしまう。<br />
+              スマホ版のレスポンシブ対応をしていないため、見た目が残念に。<br />
+              タイムゾーンを設定していないと日本時刻11時で出勤したとき、2時で記録されている<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
+          </div>
+        </div>
+
+        <div class="memo left">
           <div class="content">
             <p data-aos="fade-left" data-aos-delay="150">
-              1.データベース不具合修正
+              Adminにフィルター機能を追加
             </p>
-            <p data-aos="fade-left" data-aos-delay="150">2.デザイン改善</p>
+
+            <p class="read-more-text">
+              <br />
+              ・Pythonの仮想環境(？)を使っておらず、requirements.txtにpip freezeしたときにtensorflow等の関係のないものまで含まれていた。<br />
+              　全てが含まれたため、その中にエラーを発生させるものがいくつもあり、必用だと思われるもの以外削除していたが、その必要性の判断が間違えていた。<br />
+              ・Herokuのドキュメントを見ながら進め、デプロイはできたがApplication errorが発生。heroku logs --tailで確認すると、H14というエラーがでていた。<br />
+              ・H14への対処法を公式のドキュメントやいろんなサイトを見たが解決せず、コンソールを見るコマンド「heroku run console」を実行したが、<br />
+              　bash ~というエラーが出て使えなかった。<br />
+              ・次にrequirements.txtやProcfileの確認をし、Pythonの必用なライブラリを調べ、それを追加した(MarkupSafeなど)。するとエラー内容がH10に変わった。<br />
+              ・ここでgunicorn関係の記述がなかったことに気付き、gunicornの使い方も含まれたデプロイ方法を紹介するサイトを見て実行し、Application errorは出なくなった。<br />
+              ・結局は初歩的なところで詰まっていたことがわかったが、無事Web公開できてよかった。<br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
+          </div>
+          <div class="date">5/9</div>
+        </div>
+
+        <div class="memo right">
+          <div class="date">5/10</div>
+          <div class="content">
+            <p data-aos="fade-left" data-aos-delay="150"></p>
+            <p class="read-more-text">
+              <br />
+             <br />
+            </p>
+            <p class="read-more-btn">コメントを見る</p>
           </div>
         </div>
+
       </div>
     </main>
 

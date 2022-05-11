@@ -6,13 +6,13 @@
 }
 
 html {
-  /* display: flex; */
   color: rgb(255, 255, 255);
   justify-content: center;
   align-items: center;
   min-height: 50vh;
   background: rgba(245, 245, 245);
   max-width: 100%;
+  width: auto;
   background: -webkit-gradient(
       linear,
       left top,

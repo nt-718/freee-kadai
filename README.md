@@ -37,6 +37,15 @@ https://freee-dakoku.herokuapp.com/
 
 ---
 
+### アップデート情報
+
+- 5/11 出勤していない状態で出勤時間変更申請のエラー解決
+- 5/11 Admin が退勤したときのエラー解決
+- 5/11 時刻が一桁の場合、表示のされ方を 01 のように変更。
+  <br>
+
+---
+
 ### <p><br>アプリの構造<img src="/dakoku-app/static/app-stracture.png" alt="error" /></p>
 
 ### <p><br>フォルダ<img src="/dakoku-app/static/app-tree.png" alt="error" /></p>
@@ -90,7 +99,7 @@ pytz==2021.3
 #### 〇今年学ぶ予定
 
 - JavaScript
-- JavaScript のフレームワーク
-  <br>⇒ 特に React
-- Ruby or PHP：どちらがおすすめか面接で聞きたい
+- React
+- Ruby
 - AWS
+  <br>⇒React か Ruby でメモ(インプット用)アプリを作りたい。

@@ -14,9 +14,8 @@ jst = pytz.timezone('Asia/Tokyo')
 # データベース
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-
-
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 db = SQLAlchemy(app)
 
 # Todo
@@ -151,7 +150,19 @@ def home():
             
             # 初出勤
             if check is None:
-                newinfo = User(user=username, day=day, starth=st_h, startm=st_m)
+                
+                # 時刻を01:05のように表示
+                if int(st_h) < 10:
+                    sth = "0" + st_h
+                else:
+                    sth = st_h
+                    
+                if int(st_m) < 10:
+                    stm = "0" + st_m
+                else:
+                    stm = st_m
+                    
+                newinfo = User(user=username, day=day, starth=sth, startm=stm)
                 # データベースに追加
                 db.session.add(newinfo)
                 db.session.commit()
@@ -173,6 +184,9 @@ def finish(user):
     
     if request.method == 'POST':    
         # ユーザーと時刻をフィルター
+        if user == "Admin":
+            return redirect('/')
+        
         day=datetime.now(jst).date()
         time = User.query.filter_by(user=user, day=day).first()
         

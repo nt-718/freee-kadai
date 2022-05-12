@@ -1,3 +1,4 @@
+from operator import and_, or_
 from flask import Flask
 from flask import render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
@@ -60,8 +61,32 @@ class Request(db.Model):
     def __repr__(self):
         return f"Request('{self.user}', '{self.text}', '{self.date}', '{self.endh}:{self.endm}')"
     
+# board
+class Board(db.Model):
+    __tablename__ = 'board'
+    id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(20), nullable=False)
+    memo = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
-    
+    # データベース中身チェック
+    def __repr__(self):
+        return f"Board('{self.user}', '{self.memo}', '{self.date_created}')"
+
+# Chat
+class Chat(db.Model):
+    __tablename__ = 'chats'
+    id = db.Column(db.Integer, primary_key=True)
+    userfrom = db.Column(db.String(20), nullable=False)
+    userto = db.Column(db.String(20), nullable=False)
+    memo = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # データベース中身チェック
+    def __repr__(self):
+        return f"Chat('From:{self.userfrom}', To:{self.userto}', '{self.memo}', '{self.date_created}')"
+
+
 # 欠勤メッセージ
 mail = Mail(app)
 
@@ -338,7 +363,7 @@ def memo(user):
             db.session.add(new_task)
             db.session.commit()
             tasks = Todo.query.filter_by(user=user).order_by(Todo.date_created).all()
-            return render_template('memo.html',tasks=tasks, username=user)
+            return redirect(url_for('todo', user=user))
         
         except:
             return "エラー"
@@ -460,6 +485,71 @@ def counter():
 @app.route('/game/sudoku')
 def sudoku():
     return render_template('sudoku.html')
+
+
+# Board
+@app.route('/board/<user>', methods=['GET', 'POST'])
+def board(user):
+    
+    message = Board.query.all()
+    return render_template('board.html', message=message, username=user)
+
+
+# メッセージ追加
+@app.route('/write/<user>', methods=['GET', 'POST'])
+def board_write(user):
+    
+    if request.method == 'POST':
+        write = request.form['write']
+        new_write = Board(memo=write, user=user)
+
+        try:
+            db.session.add(new_write)
+            db.session.commit()
+            message = Board.query.all()
+            return redirect(url_for('board', user=user))
+        
+        except:
+            return "エラー"
+        
+    else:
+        message = Board.query.all()
+        return render_template('board.html', message=message, username=user)
+
+
+# Chat
+@app.route('/chat/<userfrom>/<userto>', methods=['GET', 'POST'])
+def chat(userfrom, userto):
+    
+    if userfrom == userto:
+        message = Chat.query.filter(Chat.userfrom == userfrom, Chat.userto == userfrom).all()
+
+    else:
+        message = Chat.query.filter(or_(Chat.userfrom == userfrom, Chat.userto == userfrom)).filter(or_(Chat.userfrom == userto, Chat.userto == userto)).all()
+
+    return render_template('chat.html', message=message, username=userfrom, userto=userto)
+
+
+# メッセージ追加
+@app.route('/chat_write/<userfrom>/<userto>', methods=['GET', 'POST'])
+def chat_write(userfrom, userto):
+    
+    if request.method == 'POST':
+        write = request.form['chat']
+        new_chat = Chat(memo=write, userfrom=userfrom, userto=userto)
+
+        try:
+            db.session.add(new_chat)
+            db.session.commit()
+            message = Chat.query.filter_by(userfrom=userfrom, userto=userto).all()
+            return redirect(url_for('chat', userfrom=userfrom, userto=userto))
+        
+        except:
+            return "エラー"
+        
+    else:
+        message = Chat.query.filter_by(userfrom=userfrom, userto=userto).all()
+        return render_template('chat.html', message=message, username=userfrom, userto=userto)
 
 
 # debug

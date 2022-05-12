@@ -363,3 +363,19 @@ form {
   padding: 5px;
   margin: 3rem 0 3rem 0;
 }
+
+.message {
+  margin-top: 1rem;
+  max-width: 100%;
+  width: 70%;
+}
+
+.chat {
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  max-width: 100%;
+  width: 70%;
+}

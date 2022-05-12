@@ -13,14 +13,24 @@
 </header>
 
 {% extends "base.html" %} {% block content %}
+<!--  -->
 
-<h1>息抜きをすることはとても大切なことです</h1>
-<p>Youtubeでリラックス動画をみますか？</p>
-<a href="https://www.youtube.com/" style="color: crimson">Youtube：⇐ click</a>
-<p>簡単なゲームで脳をリフレッシュしますか？</p>
-<a href="counter" style="color: crimson">カウンター：⇐ click</a>
-<a href="sudoku" style="color: crimson">A Number：⇐ click</a>
+<h1>チャット to {{ userto }}</h1>
 
-<!-- Taikinn section end -->
+{% if message|length < 1 %}
+<h2 style="text-align: center">
+  {{ userto }}さんにメッセージを送ってみましょう。
+</h2>
+{% else %} {% for msg in message %}
+
+<div class="chat">
+  <p style="padding: 1rem">{{ msg.userfrom }} : {{ msg.memo }}</p>
+</div>
+
+{% endfor %} {% endif %}
+<form action="/chat_write/{{ username }}/{{ userto }}" method="POST">
+  <input type="text" name="chat" class="form-text" />
+  <input type="submit" value="送信" class="btn" />
+</form>
 
 {% endblock %}

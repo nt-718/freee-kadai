@@ -1,0 +1,55 @@
+<header>
+  <a href="/home/{{ username }}">ホーム</a>
+  <a href="/game/{{ username }}">息抜き</a>
+  <a href="/memo/{{ username }}">Todo管理</a>
+  <a href="/history/{{ username }}">カレンダー</a>
+  <a href="/board/{{ username }}">掲示板</a>
+  <a href="/edit/{{ username }}">出退勤管理</a>
+  <a href=""
+    ><form action="/finish/{{ username }}" method="POST">
+      <input type="submit" value="退勤" class="btn" />
+    </form>
+  </a>
+</header>
+
+{% extends "base.html" %} {% block content %}
+<!--  -->
+<h1>連絡掲示板</h1>
+{% if message|length < 1 %}
+<h2 style="text-align: center">連絡はありません</h2>
+{% else %} {% for msg in message %}
+
+<div class="message" style="border: 1px solid white">
+  <div class="message-content" style="padding: 1rem">
+    <p>
+      <a href="/chat/{{ username }}/{{ msg.user }}">{{ msg.user }}</a> : {{
+      msg.date_created }}
+    </p>
+    <p>{{ msg.memo }}</p>
+  </div>
+</div>
+
+{% endfor %} {% endif %}
+<form action="/write/{{ username }}" method="POST">
+  <input
+    type="text"
+    name="write"
+    class="form-text"
+    placeholder="コメントを入力してください"
+  />
+  <input type="submit" value="送信" class="btn" />
+</form>
+
+<!-- 
+<p>個別チャットはこちら</p>
+<form action="/chat/{{ username }}/" method="POST">
+  <input
+    type="text"
+    name="chatname"
+    class="form-text"
+    placeholder="相手の名前を入力してください"
+  />
+  <input type="submit" value="決定" class="btn" />
+</form> -->
+
+{% endblock %}

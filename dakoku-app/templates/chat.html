@@ -24,7 +24,8 @@
 {% else %} {% for msg in message %}
 
 <div class="chat">
-  <p style="padding: 1rem">{{ msg.userfrom }} : {{ msg.memo }}</p>
+  <p>{{ msg.userfrom }} : {{ msg.date_created }}</p>
+  <p>{{ msg.memo }}</p>
 </div>
 
 {% endfor %} {% endif %}

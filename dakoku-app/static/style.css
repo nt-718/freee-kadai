@@ -372,9 +372,7 @@ form {
 
 .chat {
   border: 1px solid white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 1rem;
   margin-top: 1rem;
   max-width: 100%;
   width: 70%;

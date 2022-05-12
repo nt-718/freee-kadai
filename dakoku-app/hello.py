@@ -153,12 +153,12 @@ def home():
                 
                 # 時刻を01:05のように表示
                 if int(st_h) < 10:
-                    sth = "0" + st_h
+                    sth = "0" + str(st_h)
                 else:
                     sth = st_h
                     
                 if int(st_m) < 10:
-                    stm = "0" + st_m
+                    stm = "0" + str(st_m)
                 else:
                     stm = st_m
                     
@@ -205,8 +205,20 @@ def finish(user):
             
         # データベースの退勤時間を更新
         endtime = User.query.filter_by(user=user, day=day).first() 
-        endtime.endh = et_h
-        endtime.endm = et_m
+        
+        # 時刻を01:05のように表示
+        if int(et_h) < 10:
+            eth = "0" + str(et_h)
+        else:
+            eth = et_h
+            
+        if int(et_m) < 10:
+            etm = "0" + str(et_m)
+        else:
+            etm = et_m
+        
+        endtime.endh = eth
+        endtime.endm = etm
         db.session.commit() 
             
         return render_template('finish.html',username=user, et_h=et_h, et_m=et_m, th=th, tm=tm)
